@@ -1,10 +1,10 @@
 {
-  "name": "betterrolls5e",
-  "title": "Better Rolls for 5e",
-  "description": "This module overhauls rolls for the D&D 5e system, allowing \"dual rolls\" for d20 rolls, buttons that support full output to chat, and customization for said outputs.",
+  "name": "betterrollssw5e",
+  "title": "Better Rolls for sw5e",
+  "description": "This module overhauls rolls for the sw5e system, allowing \"dual rolls\" for d20 rolls, buttons that support full output to chat, and customization for said outputs.",
   "author": "Red Reign#5128",
   "authors": [],
-  "url": "https://github.com/RedReign/FoundryVTT-BetterRolls5e/tree/master/betterrolls5e",
+  "url": "https://github.com/Ikaguia/FoundryVTT-BetterRolls5e/tree/master/betterrolls5e",
   "flags": {},
   "version": "1.5.6",
   "minimumCoreVersion": "0.8.6",
@@ -61,12 +61,13 @@
     }
   ],
   "packs": [],
-  "system": [],
+  "system": [
+    "sw5e"
+  ],
   "dependencies": [],
   "socket": true,
-  "manifest": "https://raw.githubusercontent.com/RedReign/FoundryVTT-BetterRolls5e/master/betterrolls5e/module.json",
-  "download": "https://github.com/RedReign/FoundryVTT-BetterRolls5e/releases/download/v1.5.6/module.zip",
+  "manifest": "https://raw.githubusercontent.com/Ikaguia/FoundryVTT-BetterRolls5e/master/betterrolls5e/module.json",
+  "download": "https://github.com/Ikaguia/FoundryVTT-BetterRolls5e/releases/download/v1.5.6/module.zip",
   "protected": false,
-  "coreTranslation": false,
-  "minimumSystemVersion": "1.2.1"
+  "coreTranslation": false
 }

@@ -1,8 +1,8 @@
 import { isSave } from "../betterrolls5e.js";
 import { getSettings } from "../settings.js";
-import { DND5E } from "../../../../systems/dnd5e/module/config.js";
+import { SW5E } from "../../../../systems/sw5e/module/config.js";
 
-export const dnd5e = DND5E;
+export const sw5e = SW5E;
 
 /**
  * Shorthand for both game.i18n.format() and game.i18n.localize() depending
@@ -200,7 +200,7 @@ export class Utils {
 
 		const results = controlled.filter(a => a);
 		if (required && !controlled.length) {
-			ui.notifications.warn(game.i18n.localize("DND5E.ActionWarningNoToken"));
+			ui.notifications.warn(game.i18n.localize("SW5e.ActionWarningNoToken"));
 		}
 
 		return results;
@@ -289,7 +289,7 @@ export class ActorUtils {
 	 * @param {Actor} actor
 	 */
 	static isHalfling(actor) {
-		return getProperty(actor, "data.flags.dnd5e.halflingLucky");
+		return getProperty(actor, "data.flags.sw5e.halflingLucky");
 	}
 
 	/**
@@ -297,7 +297,7 @@ export class ActorUtils {
 	 * @param {Actor} actor
 	 */
 	static hasReliableTalent(actor) {
-		return getProperty(actor, "data.flags.dnd5e.reliableTalent");
+		return getProperty(actor, "data.flags.sw5e.reliableTalent");
 	}
 
 	/**
@@ -305,7 +305,7 @@ export class ActorUtils {
 	 * @param {Actor} actor
 	 */
 	static hasElvenAccuracy(actor) {
-		return getProperty(actor, "data.flags.dnd5e.elvenAccuracy");
+		return getProperty(actor, "data.flags.sw5e.elvenAccuracy");
 	}
 
 	/**
@@ -323,22 +323,23 @@ export class ActorUtils {
 	 * @param {*} actor
 	 */
 	static getMeleeExtraCritDice(actor) {
-		return actor?.getFlag("dnd5e", "meleeCriticalDamageDice") ?? 0;
+		return 0;
+		// return actor?.getFlag("sw5e", "meleeCriticalDamageDice") ?? 0;
 	}
 
 	/**
 	 * Returns the crit threshold of an actor. Returns null if no actor is given.
 	 * @param {Actor} actor the actor who's data we want
-	 * @param {"weapon" | "spell" | undefined} itemType the item type we're dealing with
+	 * @param {"weapon" | "power" | undefined} itemType the item type we're dealing with
 	 */
 	static getCritThreshold(actor, itemType) {
 		if (!actor) return 20;
 
-		const actorFlags = actor.data.flags.dnd5e || {};
+		const actorFlags = actor.data.flags.sw5e || {};
 		if (itemType === "weapon" && actorFlags.weaponCriticalThreshold) {
 			return parseInt(actorFlags.weaponCriticalThreshold);
-		} else if (itemType === "spell" && actorFlags.spellCriticalThreshold) {
-			return parseInt(actorFlags.spellCriticalThreshold);
+		} else if (itemType === "power" && actorFlags.powerCriticalThreshold) {
+			return parseInt(actorFlags.powerCriticalThreshold);
 		} else {
 			return 20;
 		}
@@ -416,7 +417,7 @@ export class ItemUtils {
 		const activationCost = activation?.cost ?? "";
 
 		if (activation?.type && activation?.type !== "none") {
-			return `${activationCost} ${dnd5e.abilityActivationTypes[activation.type]}`.trim();
+			return `${activationCost} ${sw5e.abilityActivationTypes[activation.type]}`.trim();
 		}
 
 		return null;
@@ -430,7 +431,7 @@ export class ItemUtils {
 	static getCritThreshold(item) {
 		if (!item) return null;
 
-		// Get item crit. If its a weapon or spell, it might have a DND flag to change the range
+		// Get item crit. If its a weapon or power, it might have a DND flag to change the range
 		// We take the smallest item crit value
 		let itemCrit = Number(getProperty(item, "data.flags.betterRolls5e.critRange.value")) || 20;
 		const characterCrit = ActorUtils.getCritThreshold(item.actor, item.data.type);
@@ -444,7 +445,7 @@ export class ItemUtils {
 			return null;
 		}
 
-		return `${duration.value ? duration.value : ""} ${dnd5e.timePeriods[duration.units]}`.trim()
+		return `${duration.value ? duration.value : ""} ${sw5e.timePeriods[duration.units]}`.trim()
 	}
 
 	static getRange(item) {
@@ -456,35 +457,13 @@ export class ItemUtils {
 
 		const standardRange = range.value || "";
 		const longRange = (range.long && range.long !== range.value) ? `/${range.long}` : "";
-		const rangeUnit = range.units ? dnd5e.distanceUnits[range.units] : "";
+		const rangeUnit = range.units ? sw5e.distanceUnits[range.units] : "";
 
 		return `${standardRange}${longRange} ${rangeUnit}`.trim();
 	}
 
-	static getSpellComponents(item) {
-		const { vocal, somatic, material } = item.data.data.components;
-
-		let componentString = "";
-
-		if (vocal) {
-			componentString += i18n("br5e.chat.abrVocal");
-		}
-
-		if (somatic) {
-			componentString += i18n("br5e.chat.abrSomatic");
-		}
-
-		if (material) {
-			const materials = item.data.data.materials;
-			componentString += i18n("br5e.chat.abrMaterial");
-
-			if (materials.value) {
-				const materialConsumption = materials.consumed ? i18n("br5e.chat.consumedBySpell") : ""
-				componentString += ` (${materials.value}` + ` ${materialConsumption})`;
-			}
-		}
-
-		return componentString || null;
+	static getPowerComponents(item) {
+		return null;
 	}
 
 	static getTarget(item) {
@@ -494,8 +473,8 @@ export class ItemUtils {
 			return null;
 		}
 
-		const targetDistance = target.units && target?.units !== "none" ? ` (${target.value} ${dnd5e.distanceUnits[target.units]})` : "";
-		return i18n("Target: ") + dnd5e.targetTypes[target.type] + targetDistance;
+		const targetDistance = target.units && target?.units !== "none" ? ` (${target.value} ${sw5e.distanceUnits[target.units]})` : "";
+		return i18n("Target: ") + sw5e.targetTypes[target.type] + targetDistance;
 	}
 
 	/**
@@ -552,7 +531,7 @@ export class ItemUtils {
 
 	static placeTemplate(item) {
 		if (item?.hasAreaTarget) {
-			const template = game.dnd5e.canvas.AbilityTemplate.fromItem(item);
+			const template = game.sw5e.canvas.AbilityTemplate.fromItem(item);
 			if (template) template.drawPreview();
 			if (item.sheet?.rendered) item.sheet.minimize();
 		}
@@ -687,12 +666,12 @@ export class ItemUtils {
 	}
 
 	/**
-	 * Returns the scaled damage formula of the spell
+	 * Returns the scaled damage formula of the power
 	 * @param {number | "versatile"} damageIndex The index to scale, or versatile
-	 * @returns {string | null} the formula if scaled, or null if its not a spell
+	 * @returns {string | null} the formula if scaled, or null if its not a power
 	 */
-	static scaleDamage(item, spellLevel, damageIndex, rollData) {
-		if (item?.data.type === "spell") {
+	static scaleDamage(item, powerLevel, damageIndex, rollData) {
+		if (item?.data.type === "power") {
 			const versatile = (damageIndex === "versatile");
 			if (versatile) {
 				damageIndex = 0;
@@ -705,14 +684,14 @@ export class ItemUtils {
 			let formula = versatile ? itemData.damage.versatile : itemData.damage.parts[damageIndex][0];
 			const parts = [formula];
 
-			// Scale damage from up-casting spells
-			if (itemData.scaling.mode === "cantrip") {
+			// Scale damage from up-casting powers
+			if (itemData.scaling.mode === "atwill") {
 				const level = item.actor.data.type === "character" ?
 					actorData.details.level :
-					(actorData.details.spellLevel || actorData.details.cr);
-				item._scaleCantripDamage(parts, scale, level, rollData);
-			} else if (spellLevel && (itemData.scaling.mode === "level") && itemData.scaling.formula) {
-				item._scaleSpellDamage(parts, itemData.level, spellLevel, scale, rollData);
+					(actorData.details.powerLevel || actorData.details.cr);
+				item._scaleAtWillDamage(parts, scale, level, rollData);
+			} else if (powerLevel && (itemData.scaling.mode === "level") && itemData.scaling.formula) {
+				item._scalePowerDamage(parts, itemData.level, powerLevel, scale, rollData);
 			}
 
 			return parts[0];
@@ -739,7 +718,7 @@ export class ItemUtils {
 		switch(item.data.type) {
 			case "weapon":
 				properties = [
-					dnd5e.weaponTypes[data.weaponType],
+					sw5e.weaponTypes[data.weaponType],
 					range,
 					target,
 					data.proficient ? "" : i18n("Not Proficient"),
@@ -747,35 +726,9 @@ export class ItemUtils {
 				];
 				for (const prop in data.properties) {
 					if (data.properties[prop] === true) {
-						properties.push(dnd5e.weaponProperties[prop]);
+						properties.push(sw5e.weaponProperties[prop]);
 					}
 				}
-				break;
-			case "spell":
-				// Spell attack labels
-				data.damageLabel = data.actionType === "heal" ? i18n("br5e.chat.healing") : i18n("br5e.chat.damage");
-				data.isAttack = data.actionType === "attack";
-
-				properties = [
-					dnd5e.spellLevels[data.castedLevel ?? data.level],
-					dnd5e.spellSchools[data.school],
-					data.components.ritual ? i18n("Ritual") : null,
-					activation,
-					duration,
-					data.components.concentration ? i18n("Concentration") : null,
-					ItemUtils.getSpellComponents(item),
-					range,
-					target
-				];
-				break;
-			case "feat":
-				properties = [
-					data.requirements,
-					activation,
-					duration,
-					range,
-					target,
-				];
 				break;
 			case "consumable":
 				properties = [
@@ -788,7 +741,7 @@ export class ItemUtils {
 				break;
 			case "equipment":
 				properties = [
-					dnd5e.equipmentTypes[data.armor.type],
+					sw5e.equipmentTypes[data.armor.type],
 					data.equipped ? i18n("Equipped") : null,
 					data.armor.value ? data.armor.value + " " + i18n("AC") : null,
 					data.stealth ? i18n("Stealth Disadv.") : null,
@@ -797,13 +750,155 @@ export class ItemUtils {
 				break;
 			case "tool":
 				properties = [
-					dnd5e.proficiencyLevels[data.proficient],
-					data.ability ? dnd5e.abilities[data.ability] : null,
+					sw5e.proficiencyLevels[data.proficient],
+					data.ability ? sw5e.abilities[data.ability] : null,
 					data.weight ? data.weight + " lbs." : null,
 				];
 				break;
 			case "loot":
 				properties = [data.weight ? item.data.totalWeight + " lbs." : null]
+				break;
+			case "backpack":
+				properties = [data.weight ? item.data.totalWeight + " lbs." : null]
+				break;
+
+			case "power":
+				// Power attack labels
+				data.damageLabel = data.actionType === "heal" ? i18n("br5e.chat.healing") : i18n("br5e.chat.damage");
+				data.isAttack = data.actionType === "attack";
+
+				properties = [
+					sw5e.powerLevels[data.castedLevel ?? data.level],
+					sw5e.powerSchools[data.school],
+					data.components.ritual ? i18n("Ritual") : null,
+					activation,
+					duration,
+					data.components.concentration ? i18n("Concentration") : null,
+					ItemUtils.getPowerComponents(item),
+					range,
+					target
+				];
+				break;
+
+			case "class":
+				properties = [
+					data.levels,
+					data.archetype,
+				];
+				break;
+			case "classfeature":
+				properties = [
+					data.requirements,
+					activation,
+					duration,
+					range,
+					target,
+				];
+				break;
+			case "archetype":
+				properties = [
+					data.className,
+					data.classCasterType,
+					data.archetype,
+				];
+				break;
+
+			case "feat":
+				properties = [
+					data.requirements,
+					activation,
+					duration,
+					range,
+					target,
+				];
+				break;
+
+			case "species":
+			case "background":
+			case "deployment":
+				properties = [
+					data.source,
+				];
+				break;
+
+			case "deploymentfeature":
+				properties = [
+					data.deployment.value,
+					data.requirements,
+					data.rank.value,
+					activation,
+					duration,
+					range,
+					target,
+				];
+				break;
+			case "venture":
+				properties = [
+					data.requirements,
+					activation,
+					duration,
+					range,
+					target,
+				];
+				break;
+
+			case "fightingstyle":
+				properties = [
+					data.requirements,
+					activation,
+					duration,
+					range,
+					target,
+				];
+				break;
+			case "fightingmastery":
+				properties = [
+					data.requirements,
+					activation,
+					duration,
+					range,
+					target,
+				];
+				break;
+			case "lightsaberform":
+				properties = [
+					data.requirements,
+					activation,
+					duration,
+					range,
+					target,
+				];
+				break;
+
+			case "starship":
+				properties = [
+					data.tier,
+					data.hullDice,
+					data.pwrDice,
+					data.source,
+				];
+				break;
+			case "starshipfeature":
+				properties = [
+					data.size,
+					data.tier,
+					activation,
+					duration,
+					range,
+					target,
+				];
+				break;
+			case "starshipmod":
+				properties = [
+					data.system.value,
+					data.grade.value,
+					data.baseCost.value,
+					data.prerequisites.value,
+					activation,
+					duration,
+					range,
+					target,
+				];
 				break;
 		}
 		let output = properties.filter(p => (p) && (p.length !== 0) && (p !== " "));
