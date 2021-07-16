@@ -2,24 +2,13 @@
 This is a fork of RedReign's [Better Rolls for 5e](https://github.com/RedReign/FoundryVTT-BetterRolls5e) module.
 A Foundry VTT module that replaces the built in rolling system for sw5e. It allows for quick, compounded rolls for items, ability checks saving throws, and just about any roll you might want. Though initially a fork of Hooking's [Item Sheet Buttons](https://gitlab.com/hooking/foundry-vtt---item-sheet-buttons) module, it now includes several roll templates designed for Foundry's sw5e sheets to increase speed of play. Felix's Chat Damage Buttons module has also been implemented into core Better Rolls. 
 
-If you are feeling generous, and would like to support my work, you can do so through this [Paypal](https://www.paypal.me/RedReignDonate) link. Thank you!
-
-## Incompatible Modules
-- Mars (replaces the core roller, competing directly with Better Rolls. Its one or the other)
-- Better NPC Sheet 5e (very out of date)
+If you are feeling generous, and would like to support RedReign's work, you can do so through this [Paypal](https://www.paypal.me/RedReignDonate) link. Thank you!
 
 #### Partially Compatible (Special Notes)
 - Midi QOL: more or less works, but make sure to enable fast forward attack in the midi options. If auto hit detection is enabled in midi, you'll need to use the query roll mode in Better Rolls to have more accurate results (dual mode / triple mode will throw it off as midi does not detect edits in better rolls).
 - J2BA Animations: Only for attack rolls. If set to play on damage rolls it won't work.
 
 ## Installation
-### Method 1
-- Start up Foundry and click "Install Module" in the "Add-On Modules" tab.
-- Search for "Better Rolls" in the pop up window.
-- Click "Install" and it should appear in your modules list.
-- Enjoy!
-
-### Method 2
 - Start up Foundry and click "Install Module" in the "Add-On Modules" tab.
 - Paste one of the following:
   - Latest release: `https://raw.githubusercontent.com/Ikaguia/FoundryVTT-BetterRollssw5e/master/betterrollssw5e/module.json`
