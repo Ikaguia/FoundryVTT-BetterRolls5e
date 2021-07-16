@@ -226,7 +226,7 @@ export class RollFields {
 		// If no formula was given, derive from the item
 		if (!formula && item) {
 			const itemData = item.data.data;
-			const flags = item.data.flags.betterRolls5e;
+			const flags = item.data.flags.betterRollssw5e;
 
 			if (damageIndex === "other") {
 				formula = itemData.formula;
@@ -323,7 +323,7 @@ export class RollFields {
 		// If no formula was given, derive from the item
 		if (!formula && item) {
 			const itemData = item.data.data;
-			const flags = item.data.flags.betterRolls5e;
+			const flags = item.data.flags.betterRollssw5e;
 			const damageIndex = Number(options.damageIndex ?? flags.critDamage?.value);
 			formula = itemData.damage.parts[damageIndex][0];
 			damageType = damageType ?? itemData.damage.parts[damageIndex][1];

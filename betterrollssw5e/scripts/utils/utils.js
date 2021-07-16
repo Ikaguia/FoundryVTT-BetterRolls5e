@@ -32,7 +32,7 @@ function isMaestroOn() {
 
 export class Utils {
 	static getVersion() {
-		return game.modules.get("betterrolls5e").data.version;
+		return game.modules.get("betterrollssw5e").data.version;
 	}
 
 	/**
@@ -44,7 +44,7 @@ export class Utils {
 	 */
 	static getDiceSound(hasMaestroSound=false) {
 		const has3DDiceSound = game.dice3d ? game.settings.get("dice-so-nice", "settings").enabled : false;
-		const playRollSounds = game.settings.get("betterrolls5e", "playRollSounds")
+		const playRollSounds = game.settings.get("betterrollssw5e", "playRollSounds")
 
 		if (playRollSounds && !has3DDiceSound && !hasMaestroSound) {
 			return CONFIG.sounds.dice;
@@ -355,7 +355,7 @@ export class ActorUtils {
 		const actorImage = (actor.data.img && actor.data.img !== CONST.DEFAULT_TOKEN && !actor.data.img.includes("*")) ? actor.data.img : false;
 		const tokenImage = actor.token?.data?.img ? actor.token.data.img : actor.data.token.img;
 
-		switch(game.settings.get("betterrolls5e", "defaultRollArt")) {
+		switch(game.settings.get("betterrollssw5e", "defaultRollArt")) {
 			case "actor":
 				return actorImage || tokenImage;
 			case "token":
@@ -433,7 +433,7 @@ export class ItemUtils {
 
 		// Get item crit. If its a weapon or power, it might have a DND flag to change the range
 		// We take the smallest item crit value
-		let itemCrit = Number(getProperty(item, "data.flags.betterRolls5e.critRange.value")) || 20;
+		let itemCrit = Number(getProperty(item, "data.flags.betterRollssw5e.critRange.value")) || 20;
 		const characterCrit = ActorUtils.getCritThreshold(item.actor, item.data.type);
 		return Math.min(20, characterCrit, itemCrit);
 	}
@@ -486,11 +486,11 @@ export class ItemUtils {
 	static async ensureFlags(item, { commit=true } = {}) {
 		const flags = this.createFlags(item?.data);
 		if (!flags) return;
-		item.data.flags.betterRolls5e = flags;
+		item.data.flags.betterRollssw5e = flags;
 
 		// Save the updates. Foundry checks for diffs to avoid unnecessary updates
 		if (commit) {
-			await item.data.update({ "flags.betterRolls5e": flags }, { diff: true });
+			await item.data.update({ "flags.betterRollssw5e": flags }, { diff: true });
 		}
 	}
 
@@ -499,16 +499,16 @@ export class ItemUtils {
 	 * @param {*} itemData The item.data property to be updated
 	 */
 	static createFlags(itemData) {
-		if (!itemData || CONFIG.betterRolls5e.validItemTypes.indexOf(itemData.type) == -1) { return; }
+		if (!itemData || CONFIG.betterRollssw5e.validItemTypes.indexOf(itemData.type) == -1) { return; }
 
 		// Initialize flags
 		itemData.flags = itemData.flags ?? {};
-		const baseFlags = duplicate(CONFIG.betterRolls5e.allFlags[itemData.type.concat("Flags")]);
-		let flags = duplicate(itemData.flags.betterRolls5e ?? {});
+		const baseFlags = duplicate(CONFIG.betterRollssw5e.allFlags[itemData.type.concat("Flags")]);
+		let flags = duplicate(itemData.flags.betterRollssw5e ?? {});
 		flags = mergeObject(baseFlags, flags ?? {});
 
 		// If quickDamage flags should exist, update them based on which damage formulae are available
-		if (CONFIG.betterRolls5e.allFlags[itemData.type.concat("Flags")].quickDamage) {
+		if (CONFIG.betterRollssw5e.allFlags[itemData.type.concat("Flags")].quickDamage) {
 			let newQuickDamageValues = [];
 			let newQuickDamageAltValues = [];
 

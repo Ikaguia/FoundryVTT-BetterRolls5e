@@ -34,7 +34,7 @@ export function addItemContent(actor, html,
 	triggeringElement = ".item .item-name h4",
 	buttonContainer = ".item-properties",
 	itemButton = ".item .rollable") {
-	(game.settings.get("betterrolls5e", "rollButtonsEnabled") && triggeringElement && buttonContainer) ? addItemSheetButtons(actor, html, null, triggeringElement, buttonContainer) : null;
+	(game.settings.get("betterrollssw5e", "rollButtonsEnabled") && triggeringElement && buttonContainer) ? addItemSheetButtons(actor, html, null, triggeringElement, buttonContainer) : null;
 	itemButton ? changeRollsToDual(actor, html, null, {itemButton}) : null;
 }
 
@@ -44,7 +44,7 @@ function getQuickDescriptionDefault() {
 	return getSettings().quickDefaultDescriptionEnabled;
 }
 
-CONFIG.betterRolls5e = 
+CONFIG.betterRollssw5e = 
 {	validItemTypes: [
 		"weapon", "equipment", "consumable", "tool", //"loot", "backpack",
 		"power",
@@ -342,7 +342,7 @@ async function addButtonsToItemLi(li, actor, buttonContainer) {
 
 	const item = actor.items.get(itemId);
 	const itemData = item.data.data;
-	const flags = item.data.flags.betterRolls5e;
+	const flags = item.data.flags.betterRollssw5e;
 
 	// Check settings
 	const settings = getSettings();
@@ -402,7 +402,7 @@ async function addButtonsToItemLi(li, actor, buttonContainer) {
 					itemData.damage.parts.forEach(([_, damageType], i) => {
 						const damageString =
 							(contextEnabled && flags.quickDamage.context[i]) ||
-							CONFIG.betterRolls5e.combinedDamageTypes[damageType];
+							CONFIG.betterRollssw5e.combinedDamageTypes[damageType];
 
 						let content = `${i}: ${damageString}`;
 

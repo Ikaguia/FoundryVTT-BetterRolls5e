@@ -112,7 +112,7 @@ import { i18n, Utils } from "./utils/index.js";
  * @returns {Promise<string>} rendered template
  */
 function renderModuleTemplate(path, props) {
-	return renderTemplate(`modules/betterrolls5e/templates/${path}`, props);
+	return renderTemplate(`modules/betterrollssw5e/templates/${path}`, props);
 }
 
 /**
@@ -224,7 +224,7 @@ export class Renderer {
 			"3": []
 		};
 
-		const dtype = CONFIG.betterRolls5e.combinedDamageTypes[damageType];
+		const dtype = CONFIG.betterRollssw5e.combinedDamageTypes[damageType];
 
 		let titleString = properties.title ?? "";
 		if (!titleString && CONFIG.DND5E.healingTypes[damageType]) {

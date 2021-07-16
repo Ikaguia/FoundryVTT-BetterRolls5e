@@ -60,7 +60,7 @@ export class DiceCollection {
 			// Note: emited events aren't caught by the same client
 			// the push argument didn't work for me, so using sockets instead
 			Utils.playDiceSound();
-			game.socket.emit("module.betterrolls5e", {
+			game.socket.emit("module.betterrollssw5e", {
 				action: "roll-sound",
 				user: game.user.id
 			}, () => console.log("Better Rolls | Roll Sound Message Sent"));

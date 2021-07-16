@@ -1,6 +1,6 @@
 import { i18n, Utils } from "./utils/index.js";
 
-const getBRSetting = (setting) => game.settings.get("betterrolls5e", setting);
+const getBRSetting = (setting) => game.settings.get("betterrollssw5e", setting);
 
 /**
  * Class type used to initialize and retrieve settings.
@@ -12,14 +12,14 @@ class Settings {
 	 */
 	init() {
 		// Special non-config flag to handle migrations
-		game.settings.register("betterrolls5e", "migration", {
+		game.settings.register("betterrollssw5e", "migration", {
 			config: false,
 			default: { status: false, version: Utils.getVersion() },
 			scope: 'world',
 			type: Object
 		});
 
-		game.settings.register("betterrolls5e", "d20Mode", {
+		game.settings.register("betterrollssw5e", "d20Mode", {
 			name: i18n("br5e.d20Mode.name"),
 			hint: i18n("br5e.d20Mode.hint"),
 			scope: "world",
@@ -35,7 +35,7 @@ class Settings {
 		});
 
 		// Enables damage buttons
-		game.settings.register("betterrolls5e", "damagePromptEnabled", {
+		game.settings.register("betterrollssw5e", "damagePromptEnabled", {
 			name: i18n("br5e.damagePromptEnabled.name"),
 			hint: i18n("br5e.damagePromptEnabled.hint"),
 			scope: "world",
@@ -45,7 +45,7 @@ class Settings {
 		});
 
 		// Register added roll buttons
-		game.settings.register("betterrolls5e", "rollButtonsEnabled", {
+		game.settings.register("betterrollssw5e", "rollButtonsEnabled", {
 			name: i18n("br5e.rollButtonsEnabled.name"),
 			hint: i18n("br5e.rollButtonsEnabled.hint"),
 			scope: "world",
@@ -55,7 +55,7 @@ class Settings {
 		});
 
 		// Register better roll for items
-		game.settings.register("betterrolls5e", "imageButtonEnabled", {
+		game.settings.register("betterrollssw5e", "imageButtonEnabled", {
 			name: i18n("br5e.imageButtonEnabled.name"),
 			hint: i18n("br5e.imageButtonEnabled.hint"),
 			scope: "world",
@@ -65,7 +65,7 @@ class Settings {
 		});
 
 		// Does Alt Click perform an Alt Roll?
-		game.settings.register("betterrolls5e", "altSecondaryEnabled", {
+		game.settings.register("betterrollssw5e", "altSecondaryEnabled", {
 			name: i18n("br5e.altSecondaryEnabled.name"),
 			hint: i18n("br5e.altSecondaryEnabled.hint"),
 			scope: "world",
@@ -75,7 +75,7 @@ class Settings {
 		});
 
 		// Show Apply Active Effects Button
-		game.settings.register("betterrolls5e", "applyActiveEffects", {
+		game.settings.register("betterrollssw5e", "applyActiveEffects", {
 			name: i18n("br5e.applyActiveEffects.name"),
 			hint: i18n("br5e.applyActiveEffects.hint"),
 			scope: "world",
@@ -85,7 +85,7 @@ class Settings {
 		})
 
 		// Register quick roll defaults for description
-		game.settings.register("betterrolls5e", "quickDefaultDescriptionEnabled", {
+		game.settings.register("betterrollssw5e", "quickDefaultDescriptionEnabled", {
 			name: i18n("br5e.quickDefaultDescriptionEnabled.name"),
 			hint: i18n("br5e.quickDefaultDescriptionEnabled.hint"),
 			scope: "world",
@@ -95,7 +95,7 @@ class Settings {
 		});
 
 		// Used to enable visually showing the natural die roll for a d20 roll.
-		game.settings.register("betterrolls5e", "d20RollIconsEnabled", {
+		game.settings.register("betterrollssw5e", "d20RollIconsEnabled", {
 			name: i18n("br5e.d20RollIconsEnabled.name"),
 			hint: i18n("br5e.d20RollIconsEnabled.hint"),
 			scope: "world",
@@ -105,7 +105,7 @@ class Settings {
 		});
 
 		// Actor Roll Image Choices
-		game.settings.register("betterrolls5e", "defaultRollArt", {
+		game.settings.register("betterrollssw5e", "defaultRollArt", {
 			name: i18n("br5e.defaultRollArt.name"),
 			hint: i18n("br5e.defaultRollArt.hint"),
 			scope: "world",
@@ -119,7 +119,7 @@ class Settings {
 		});
 
 		// Register roll label options
-		game.settings.register("betterrolls5e", "rollTitlePlacement", {
+		game.settings.register("betterrollssw5e", "rollTitlePlacement", {
 			name: i18n("br5e.rollTitlePlacement.name"),
 			hint: i18n("br5e.rollTitlePlacement.hint"),
 			scope: "world",
@@ -135,7 +135,7 @@ class Settings {
 		const damagePlacementOptions = ["damageTitlePlacement", "damageContextPlacement", "damageRollPlacement"];
 
 		damagePlacementOptions.forEach(placementOption => {
-			game.settings.register("betterrolls5e", placementOption, {
+			game.settings.register("betterrollssw5e", placementOption, {
 				name: i18n(`br5e.${placementOption}.name`),
 				hint: i18n(`br5e.${placementOption}.hint`),
 				scope: "world",
@@ -154,7 +154,7 @@ class Settings {
 		const contextReplacementOptions = ["contextReplacesTitle", "contextReplacesDamage"];
 
 		contextReplacementOptions.forEach(contextOption => {
-			game.settings.register("betterrolls5e", contextOption, {
+			game.settings.register("betterrollssw5e", contextOption, {
 				name: i18n(`br5e.${contextOption}.name`),
 				hint: i18n(`br5e.${contextOption}.hint`),
 				scope: "world",
@@ -164,7 +164,7 @@ class Settings {
 			});
 		});
 
-		game.settings.register("betterrolls5e", "critBehavior", {
+		game.settings.register("betterrollssw5e", "critBehavior", {
 			name: i18n("br5e.critBehavior.name"),
 			hint: i18n("br5e.critBehavior.hint"),
 			scope: "world",
@@ -180,7 +180,7 @@ class Settings {
 			}
 		});
 
-		game.settings.register("betterrolls5e", "critString", {
+		game.settings.register("betterrollssw5e", "critString", {
 			name: i18n("br5e.critString.name"),
 			hint: i18n("br5e.critString.hint"),
 			scope: "world",
@@ -189,7 +189,7 @@ class Settings {
 			type: String
 		});
 
-		game.settings.register("betterrolls5e", "chatDamageButtonsEnabled", {
+		game.settings.register("betterrollssw5e", "chatDamageButtonsEnabled", {
 			name: i18n("br5e.chatDamageButtonsEnabled.name"),
 			hint: i18n("br5e.chatDamageButtonsEnabled.hint"),
 			scope: "world",
@@ -203,7 +203,7 @@ class Settings {
 			}
 		});
 
-		game.settings.register("betterrolls5e", "playRollSounds", {
+		game.settings.register("betterrollssw5e", "playRollSounds", {
 			name: i18n("br5e.playRollSounds.name"),
 			hint: i18n("br5e.playRollSounds.hint"),
 			scope: "world",
@@ -212,7 +212,7 @@ class Settings {
 			type: Boolean
 		});
 
-		game.settings.register("betterrolls5e", "hideDC", {
+		game.settings.register("betterrollssw5e", "hideDC", {
 			name: i18n("br5e.hideDC.name"),
 			hint: i18n("br5e.hideDC.hint"),
 			scope: "world",

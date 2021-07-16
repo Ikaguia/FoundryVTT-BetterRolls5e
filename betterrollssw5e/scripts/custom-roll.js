@@ -192,7 +192,7 @@ export class CustomItemRoll {
 	}
 
 	static fromMessage(message) {
-		const data = message.data.flags.betterrolls5e;
+		const data = message.data.flags.betterrollssw5e;
 		const roll = new CustomItemRoll(null, data?.params ?? {}, data?.fields ?? []);
 		roll._currentId = -1;
 		roll.messageId = message.id;
@@ -756,7 +756,7 @@ export class CustomItemRoll {
 	 */
 	_getFlags() {
 		const flags = {
-			betterrolls5e: {
+			betterrollssw5e: {
 				version: Utils.getVersion(),
 				actorId: this.actorId,
 				itemId: this.itemId,
@@ -773,8 +773,8 @@ export class CustomItemRoll {
 		// its too complicated for rerolling
 		// We can probably handle it in the future somehow using FoundryProxy
 		if (this.fields?.some(f => f[1]?.actor || f[1]?.item)) {
-			console.log("BetterRolls5e | Roll fields are too complex for serialization, removing fields");
-			flags.betterrolls5e.fields = null;
+			console.log("BetterRollssw5e | Roll fields are too complex for serialization, removing fields");
+			flags.betterrollssw5e.fields = null;
 		}
 
 		if (this.fields.some(f => f[0] === "attack")) {
@@ -1043,7 +1043,7 @@ export class CustomItemRoll {
 
 		let itemData = item.data.data,
 			flags = item.data.flags,
-			brFlags = flags.betterRolls5e,
+			brFlags = flags.betterRollssw5e,
 			preset = this.params.preset,
 			properties = false,
 			useCharge = {},
