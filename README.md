@@ -1,5 +1,6 @@
-# Better Rolls for 5e - A FoundryVTT Module
-A Foundry VTT module that replaces the built in rolling system for DnD5e. It allows for quick, compounded rolls for items, ability checks saving throws, and just about any roll you might want. Though initially a fork of Hooking's [Item Sheet Buttons](https://gitlab.com/hooking/foundry-vtt---item-sheet-buttons) module, it now includes several roll templates designed for Foundry's 5e sheets to increase speed of play. Felix's Chat Damage Buttons module has also been implemented into core Better Rolls. 
+# Better Rolls for sw5e - A FoundryVTT Module
+This is a fork of RedReign's [Better Rolls for 5e](https://github.com/RedReign/FoundryVTT-BetterRolls5e) module.
+A Foundry VTT module that replaces the built in rolling system for sw5e. It allows for quick, compounded rolls for items, ability checks saving throws, and just about any roll you might want. Though initially a fork of Hooking's [Item Sheet Buttons](https://gitlab.com/hooking/foundry-vtt---item-sheet-buttons) module, it now includes several roll templates designed for Foundry's sw5e sheets to increase speed of play. Felix's Chat Damage Buttons module has also been implemented into core Better Rolls. 
 
 If you are feeling generous, and would like to support my work, you can do so through this [Paypal](https://www.paypal.me/RedReignDonate) link. Thank you!
 
@@ -21,7 +22,7 @@ If you are feeling generous, and would like to support my work, you can do so th
 ### Method 2
 - Start up Foundry and click "Install Module" in the "Add-On Modules" tab.
 - Paste one of the following:
-  - Latest release: `https://raw.githubusercontent.com/RedReign/FoundryVTT-BetterRolls5e/master/betterrolls5e/module.json`
+  - Latest release: `https://raw.githubusercontent.com/Ikaguia/FoundryVTT-BetterRollssw5e/master/betterrollssw5e/module.json`
   - The module.json listed in any of the releases (for either an older version or an alpha version)
 - Click "Install" and it should appear in your modules list.
 - Enjoy!
@@ -79,16 +80,9 @@ Extended support for thrown items, consumables, ammunition, and items with other
 
 ![](https://i.imgur.com/fMMWz3m.gif)
 
-## Planned Features
-- Additional macro support
-- Extended prompts to configure messages on a roll-by-roll basis
-- Additional hooks support and chat message flags for module cross-compatibility
-
-## Known Issues
-- In versions prior to 1.1.12, there exists a bug where, if used alongside tidy5e, Actor data may increase exponentially. This has since been addressed in 1.1.12. **If you are using Foundry Virtual Tabletop 0.7.0 or higher, please update to Better Rolls 1.1.12.**
-
 ## Acknowledgements
 - Big thanks to Atropos for making a wonderful VTT that's worth making modules for!
+- RedReign for making Better Rolls.
 - CarlosFdez (Supe on discord) is the current maintainer and has done a great deal of work cleaning up the module's code and implementing new, useful features. Thanks for all your hard work!
 - Thanks are also due to Hooking for the initial Item Sheet Buttons module, without which this project would not exist.
 - Thank you, Felix#6196 for making a wonderful extension of Chat Damage Buttons reconfigured for this module.
