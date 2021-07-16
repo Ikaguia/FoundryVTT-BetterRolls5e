@@ -15,7 +15,7 @@ function showMigrationMessage() {
 
 export async function migrateChatMessage(message) {
 	if (!game.user.isGM) return;
-	const brFlags = message.data.flags.betterrolls5e;
+	const brFlags = message.data.flags.betterrollssw5e;
 	if (!brFlags) return false;
 
 	let updated = false;
@@ -38,7 +38,7 @@ export async function migrateChatMessage(message) {
 	if (updated) {
 		showMigrationMessage();
 		await message.update({
-			"flags.betterrolls5e": duplicate(brFlags)
+			"flags.betterrollssw5e": duplicate(brFlags)
 		}, { diff: false });
 	}
 

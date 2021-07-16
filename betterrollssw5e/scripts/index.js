@@ -13,7 +13,7 @@ Hooks.on("renderActorSheet5e", (app, html, data) => {
 
 	// this timeout allows other modules to modify the sheet before we do
 	setTimeout(() => {
-		if (game.settings.get("betterrolls5e", "rollButtonsEnabled")) {
+		if (game.settings.get("betterrollssw5e", "rollButtonsEnabled")) {
 			addItemSheetButtons(app.object, html, data, triggeringElement, buttonContainer)
 		}
 	}, 0);
@@ -29,7 +29,7 @@ Hooks.once("init", () => {
 	patchCoreFunctions();
 
 	// Setup template partials
-	const prefix = "modules/betterrolls5e/templates"
+	const prefix = "modules/betterrollssw5e/templates"
 	loadTemplates([
 		`${prefix}/red-damage-crit.html`
 	]);
@@ -40,17 +40,17 @@ Hooks.on("ready", async () => {
 
 	// Make a combined damage type array that includes healing
 	const sw5e = CONFIG.SW5E;
-	CONFIG.betterRolls5e.combinedDamageTypes = mergeObject(duplicate(sw5e.damageTypes), sw5e.healingTypes);
+	CONFIG.betterRollssw5e.combinedDamageTypes = mergeObject(duplicate(sw5e.damageTypes), sw5e.healingTypes);
 
 	// Updates crit text from the dropdown.
 	let critText = BRSettings.critString;
 	if (critText.includes("br5e.critString")) {
 		critText = i18n(critText);
-		game.settings.set("betterrolls5e", "critString", critText);
+		game.settings.set("betterrollssw5e", "critString", critText);
 	}
 
 	// Set up socket
-	game.socket.on("module.betterrolls5e", (data) => {
+	game.socket.on("module.betterrollssw5e", (data) => {
 		if (data?.action === "roll-sound") {
 			Utils.playDiceSound();
 		}

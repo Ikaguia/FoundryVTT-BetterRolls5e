@@ -52,7 +52,7 @@ export class BetterRollsChatCard {
 				hoverInitialized = true;
 				await this._setupOverlayButtons(html);
 				this._onHover(html);
-				console.log("BetterRolls5e | Hover Buttons Initialized");
+				console.log("BetterRollssw5e | Hover Buttons Initialized");
 			}
 		})
 	}
@@ -77,7 +77,7 @@ export class BetterRollsChatCard {
 		// Check if the card already exists
 		const existing = message.BetterRollsCardBinding;
 		if (existing) {
-			console.log("BetterRolls5e | Retrieved existing card");
+			console.log("BetterRollssw5e | Retrieved existing card");
 			existing.updateBinding(message, chatCard);
 
 			// Pulse the card to make it look more obvious
@@ -132,13 +132,13 @@ export class BetterRollsChatCard {
 	async _setupOverlayButtons(html) {
 		// Add reroll button
 		if (this.roll?.canRepeat()) {
-			const templateHeader = await renderTemplate("modules/betterrolls5e/templates/red-overlay-header.html");
+			const templateHeader = await renderTemplate("modules/betterrollssw5e/templates/red-overlay-header.html");
 			html.find(".card-header").append($(templateHeader));
 		}
 
 		// Multiroll buttons (perhaps introduce a new toggle property?)
 		if (this.roll) {
-			const templateMulti = await renderTemplate("modules/betterrolls5e/templates/red-overlay-multiroll.html");
+			const templateMulti = await renderTemplate("modules/betterrollssw5e/templates/red-overlay-multiroll.html");
 
 			// Add multiroll overlay buttons to the DOM.
 			for (const entry of this.roll.entries) {
@@ -166,7 +166,7 @@ export class BetterRollsChatCard {
 
 		// Setup augment crit and apply damage button
 		const templateName = (BRSettings.chatDamageButtonsEnabled) ? "red-overlay-damage" : "red-overlay-damage-crit-only";
-		const templateDamage = await renderTemplate(`modules/betterrolls5e/templates/${templateName}.html`);
+		const templateDamage = await renderTemplate(`modules/betterrollssw5e/templates/${templateName}.html`);
 		const dmgElements = html.find('.dice-total .red-base-die, .dice-total .red-extra-die').parents('.dice-row').toArray();
 		const customElements = html.find('[data-type=custom] .red-base-die').toArray();
 
