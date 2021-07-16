@@ -43,7 +43,7 @@ export async function addBetterRollsContent(app, protoHtml) {
 	const canConsume = hasQuantity || hasUses || hasResource || hasCharge;
 
 	const betterRollsTemplate = await renderTemplate("modules/betterrolls5e/templates/red-item-options.html", {
-		DND5E: CONFIG.DND5E,
+		SW5E: CONFIG.SW5E,
 		item,
 		canConsume,
 		hasQuantity,

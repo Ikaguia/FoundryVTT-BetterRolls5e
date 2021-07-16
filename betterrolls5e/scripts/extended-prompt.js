@@ -5,7 +5,7 @@
 export default class ExtendedPrompt extends Dialog {
 	constructor(item, dialogData={}, options={}) {
 		super(dialogData, options);
-		this.options.classes = ["dnd5e", "dialog"];
+		this.options.classes = ["sw5e", "dialog"];
 
 		/**
 		 * Store a reference to the Item entity being used

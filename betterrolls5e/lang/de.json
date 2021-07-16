@@ -114,7 +114,7 @@
 	"br5e.chat.healing": "Heilung",
 	"br5e.chat.altPrefix": "Alt.",
 	"br5e.chat.extraPrefix": "Zusätzl.",
-	"br5e.chat.consumedBySpell": "Verbraucht durch Zauber",
+	"br5e.chat.consumedByPower": "Verbraucht durch Zauber",
 	"br5e.chat.abrVocal": "V",
 	"br5e.chat.abrSomatic": "G",
 	"br5e.chat.abrMaterial": "M",

@@ -1,4 +1,4 @@
-import { dnd5e, i18n, ActorUtils, ItemUtils, Utils } from "./utils/index.js";
+import { sw5e, i18n, ActorUtils, ItemUtils, Utils } from "./utils/index.js";
 import { BRSettings, getSettings } from "./settings.js";
 import { isSave } from "./betterrolls5e.js";
 
@@ -27,8 +27,8 @@ export class RollFields {
 		const actor = options?.actor ?? item?.actor;
 		const img = options.img ?? item?.img ?? ActorUtils.getImage(actor);
 		let title = options.title ?? item?.name ?? actor?.name ?? '';
-		if (item?.data.type === "spell" && slotLevel && slotLevel != item.data.data.level) {
-			title += ` (${dnd5e.spellLevels[slotLevel]})`;
+		if (item?.data.type === "power" && slotLevel && slotLevel != item.data.data.level) {
+			title += ` (${sw5e.powerLevels[slotLevel]})`;
 		}
 
 		return { type: "header", img, title };
@@ -127,7 +127,7 @@ export class RollFields {
 	 * @param {string?} options.formula optional formula to use instead of the attack formula
 	 * @param {Actor?} options.actor Actor to derive roll data from if item is not given
 	 * @param {Item?} options.item Item to derive attack formula or roll data from
-	 * @param {"weapon" | "spell" | undefined} options.itemType Type of attack. Used if item is null.
+	 * @param {"weapon" | "power" | undefined} options.itemType Type of attack. Used if item is null.
 	 * @param {number?} options.numRolls number of rolls to perform
 	 * @param {string?} options.title Alternative title to use
 	 * @param {number?} options.critThreshold override

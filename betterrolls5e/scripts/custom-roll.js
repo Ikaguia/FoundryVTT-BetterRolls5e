@@ -1,6 +1,6 @@
 import { isAttack, isSave, isCheck } from "./betterrolls5e.js";
 import {
-	dnd5e,
+	sw5e,
 	i18n,
 	DiceCollection,
 	ActorUtils,
@@ -62,10 +62,10 @@ export class CustomRoll {
 	 * @param {FullRollActorParams} params parameters
 	 */
 	static async rollSkill(actor, skill, params={}) {
-		if (!(skill in dnd5e.skills)) {
-			throw new Error(`Better Rolls | Skill ${skill} does not exist. Valid values can be found in CONFIG.DND5E.skills`);
+		if (!(skill in sw5e.skills)) {
+			throw new Error(`Better Rolls | Skill ${skill} does not exist. Valid values can be found in CONFIG.SW5e.skills`);
 		}
-		const label = i18n(dnd5e.skills[skill]);
+		const label = i18n(sw5e.skills[skill]);
 		const formula = (await ActorUtils.getSkillCheckRoll(actor, skill)).formula;
 		return CustomRoll._fullRollActor(actor, label, formula, "skill", params);
 	}
@@ -98,7 +98,7 @@ export class CustomRoll {
 	 * @param {FullRollActorParams} params
 	 */
 	static async rollAttribute(actor, ability, rollType, params={}) {
-		const label = dnd5e.abilities[ability];
+		const label = sw5e.abilities[ability];
 
 		let titleString;
 		let formula = "";
@@ -211,7 +211,7 @@ export class CustomItemRoll {
 			roll.tokenId = data.tokenId;
 		}
 
-		roll.storedItemData = message.getFlag("dnd5e", "itemData");
+		roll.storedItemData = message.getFlag("sw5e", "itemData");
 
 		return roll;
 	}
@@ -256,7 +256,7 @@ export class CustomItemRoll {
 		let storedData = null;
 		if (this.messageId) {
 			const message = game.messages.get(this.messageId);
-			storedData = message.getFlag("dnd5e", "itemData");
+			storedData = message.getFlag("sw5e", "itemData");
 		}
 
 		if (!storedData && !this.itemId) {
@@ -264,7 +264,7 @@ export class CustomItemRoll {
 		}
 
 		const actor = await this.getActor();
-		const Item5e = game.dnd5e.entities.Item5e;
+		const Item5e = game.sw5e.entities.Item5e;
 		const item = storedData && actor ? Item5e.createOwned(storedData, actor) : actor?.items.get(this.itemId);
 		if (item) {
 			console.info(`BetterRolls | Card loaded existing item data ${item.name}`);
@@ -627,9 +627,9 @@ export class CustomItemRoll {
 		const consume = params.consume;
 		let placeTemplate = params.useTemplate;
 
-		// Determine spell level and configuration settings
-		if (item?.data.type === "spell" && consume && !params.slotLevel) {
-			const config = await this.configureSpell();
+		// Determine power level and configuration settings
+		if (item?.data.type === "power" && consume && !params.slotLevel) {
+			const config = await this.configurePower();
 			if (config === "error") {
 				this.error = true;
 				return;
@@ -639,7 +639,7 @@ export class CustomItemRoll {
 		}
 
 		// Update item casted level property to match the slot level
-		// This ensure things like the property list showing the correct spell level
+		// This ensure things like the property list showing the correct power level
 		if (item && this.params.slotLevel) {
 			item.data.update({ 'data.castedLevel': this.params.slotLevel });
 		}
@@ -789,11 +789,11 @@ export class CustomItemRoll {
 		}
 
 		if (this.fields.some(f => f[0] === "attack")) {
-			flags["dnd5e.roll.type"] = "attack";
+			flags["sw5e.roll.type"] = "attack";
 		}
 
 		if (this.itemId) {
-			flags["dnd5e.roll.itemId"] = this.itemId;
+			flags["sw5e.roll.itemId"] = this.itemId;
 		}
 
 		// If the item was destroyed in the process of displaying its card or is a temp item with non-transfer effects,
@@ -802,7 +802,7 @@ export class CustomItemRoll {
 		const { _actor, _item } = this;
 		const wasConsumed = (_item?.data.type === "consumable") && !_actor.items.has(_item.id);
 		if (wasConsumed || (_item && !_item.id && _item?.data.effects.find(ae => !ae.data.transfer))) {
-			flags["dnd5e.itemData"] = _item.data;
+			flags["sw5e.itemData"] = _item.data;
 		}
 
 		// Allow the roll to popout
@@ -1124,22 +1124,22 @@ export class CustomItemRoll {
 	}
 
 	/**
-	 * Determine the spell level and spell slot consumption if this is an item,
-	 * and returns the spell configuration, or "error" on forced close.
+	 * Determine the power level and power slot consumption if this is an item,
+	 * and returns the power configuration, or "error" on forced close.
 	 */
-	async configureSpell() {
+	async configurePower() {
 		const item = await this.getItem();
 		const actor = await this.getActor();
-		let spellLevel = null;
+		let powerLevel = null;
 		let consume = false;
 		let placeTemplate = false;
 
 		const data = item.data.data;
 
-		// Only run the dialog if the spell is not a cantrip
-		const isSpell = item.type === "spell";
-		const requireSpellSlot = isSpell && (data.level > 0) && CONFIG.DND5E.spellUpcastModes.includes(data.preparation.mode);
-		if (requireSpellSlot) {
+		// Only run the dialog if the power is not at-will
+		const isPower = item.type === "power";
+		const requirePowerPoints = isPower && (data.level > 0) && CONFIG.SW5E.powerUpcastModes.includes(data.preparation.mode);
+		if (requirePowerPoints) {
 			// The ability use dialog shows consumption prompts, but we cannot control the default values
 			// therefore we have to remove them then add them back.
 			const propsToRemove = ["uses", "recharge"];
@@ -1148,14 +1148,14 @@ export class CustomItemRoll {
 				extracted = pick(data, propsToRemove);
 				propsToRemove.forEach((prop) => delete data[prop]);
 
-				const spellFormData = await game.dnd5e.applications.AbilityUseDialog.create(item);
-				if (!spellFormData) {
+				const powerFormData = await game.sw5e.applications.AbilityUseDialog.create(item);
+				if (!powerFormData) {
 					return "error";
 				}
 
-				spellLevel = spellFormData.level;
-				consume = Boolean(spellFormData.consumeSlot);
-				placeTemplate = Boolean(spellFormData.placeTemplate);
+				powerLevel = powerFormData.level;
+				consume = Boolean(powerFormData.consumeSlot);
+				placeTemplate = Boolean(powerFormData.placeTemplate);
 			} catch(error) {
 				console.error(error);
 				return "error";
@@ -1169,18 +1169,12 @@ export class CustomItemRoll {
 		}
 
 		// If consume is enabled, mark which slot is getting consumed
-		if (consume) {
-			consume = spellLevel === "pact" ? "pact" : `spell${spellLevel}`;
-		}
-
-		if (spellLevel == "pact") {
-			spellLevel = getProperty(actor, `data.data.spells.pact.level`) || spellLevel;
-		}
+		if (consume) consume = powerLevel;
 
 		// Update params temporarily
-		this.params.slotLevel = spellLevel;
-		this.params.consumeSpellLevel = consume;
-		return { lvl: spellLevel, consume, placeTemplate };
+		this.params.slotLevel = powerLevel;
+		this.params.consumePowerLevel = consume;
+		return { lvl: powerLevel, consume, placeTemplate };
 	}
 
 	/**
@@ -1195,7 +1189,7 @@ export class CustomItemRoll {
 		const baseItem = await this.getItem();
 		if (!baseItem || !baseItem.id) return;
 
-		// The error message for spells uses the item level, so we tweak so that it reports correctly
+		// The error message for powers uses the item level, so we tweak so that it reports correctly
 		const itemLevel = this.params.slotLevel ?? baseItem.data.data.level;
 		const item = baseItem.clone({ "data.level": itemLevel }, { keepId: true });
 
@@ -1223,7 +1217,7 @@ export class CustomItemRoll {
 		let output = "success";
 
 		// Identify what's being consumed. Note that ammo is consumed elsewhere
-		const consumeSpellLevel = this.params.consumeSpellLevel;
+		const consumePowerLevel = this.params.consumePowerLevel;
 		const consumeResource = hasResource && request.resource && itemData.consume.type !== "ammo";
 		const consumeUsage = request.use && hasUses;
 		const consumeQuantity = request.quantity || autoDestroy;
@@ -1231,18 +1225,19 @@ export class CustomItemRoll {
 
 		// Check for consuming quantity, but not uses
 		if (request.quantity && !consumeUsage) {
-			if (!quantity) { ui.notifications.warn(game.i18n.format("DND5E.ItemNoUses", {name: item.name})); return "error"; }
+			if (!quantity) { ui.notifications.warn(game.i18n.format("SW5e.ItemNoUses", {name: item.name})); return "error"; }
 		}
 
 		// Check for consuming charge ("Action Recharge")
 		if (consumeCharge && !recharge.charged) {
-			ui.notifications.warn(game.i18n.format("DND5E.ItemNoUses", {name: item.name}));
+			ui.notifications.warn(game.i18n.format("SW5e.ItemNoUses", {name: item.name}));
 			return "error";
 		}
 
-		// Consume resources and spell slots
-		if (consumeResource || consumeSpellLevel) {
-			const updates = item._getUsageUpdates({ consumeResource, consumeSpellLevel });
+		// Consume resources and power points
+		if (consumeResource || consumePowerLevel) {
+			const FALSE = false;
+			const updates = item._getUsageUpdates({ FALSE, FALSE, consumeResource, consumePowerLevel });
 			if (!updates) return "error";
 			mergeUpdates(updates);
 		}

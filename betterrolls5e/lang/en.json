@@ -6,7 +6,7 @@
 
 	"br5e.migrating": "Applying Better Rolls System Migration for version {version}",
 	"br5e.rollButtonsEnabled.name": "Add Extra Roll Buttons to Sheet",
-	"br5e.rollButtonsEnabled.hint": "Adds buttons to items, spells, and features in the sheet, which display when the item is expanded. May be incompatible with the Item Sheet Buttons mod. Requires reopening the sheet.",
+	"br5e.rollButtonsEnabled.hint": "Adds buttons to items, powers, and features in the sheet, which display when the item is expanded. May be incompatible with the Item Sheet Buttons mod. Requires reopening the sheet.",
 	"br5e.imageButtonEnabled.name": "Make Item Image Auto-roll",
 	"br5e.imageButtonEnabled.hint": "When clicking on an item's image, output a Better Roll message to chat instead of the normal chat output. Can be bypassed by holding Alt when clicking.",
 	"br5e.quickDefaultDescriptionEnabled.name": "Quick Roll Description Enabled by Default",
@@ -143,7 +143,7 @@
 	"br5e.chat.healing": "Healing",
 	"br5e.chat.altPrefix": "Alt.",
 	"br5e.chat.extraPrefix": "Extra",
-	"br5e.chat.consumedBySpell": "Consumed by spell",
+	"br5e.chat.consumedByPower": "Consumed by power",
 	"br5e.chat.abrVocal": "V",
 	"br5e.chat.abrSomatic": "S",
 	"br5e.chat.abrMaterial": "M",

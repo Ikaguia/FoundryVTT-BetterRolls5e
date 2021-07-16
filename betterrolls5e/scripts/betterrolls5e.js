@@ -1,11 +1,11 @@
-import { DND5E } from "../../../systems/dnd5e/module/config.js";
+import { SW5E } from "../../../systems/sw5e/module/config.js";
 import { CustomRoll, CustomItemRoll } from "./custom-roll.js";
 import { i18n, Utils, ItemUtils } from "./utils/index.js";
 import { getSettings } from "./settings.js";
 
 // Returns whether an item makes an attack roll
 export function isAttack(item) {
-	const attacks = ["mwak", "rwak", "msak", "rsak"];
+	const attacks = ["mwak", "rwak", "mpak", "rpak"];
 	return attacks.includes(item.data.data.actionType);
 }
 
@@ -39,14 +39,24 @@ export function addItemContent(actor, html,
 	}
 }
 
-const dnd5e = DND5E;
+const sw5e = SW5E;
 
 function getQuickDescriptionDefault() {
 	return getSettings().quickDefaultDescriptionEnabled;
 }
 
 CONFIG.betterRolls5e = {
-	validItemTypes: ["weapon", "spell", "equipment", "feat", "tool", "consumable"],
+	validItemTypes: [
+		"weapon", "equipment", "consumable", "tool", //"loot", "backpack",
+		"power",
+		/*"class",*/ "classfeature", //"archetype",
+		"feat",
+		//"species",
+		//"background",
+		"deployment", "deploymentfeature", "venture",
+		"fightingmastery", "fightingstyle", "lightsaberform",
+		"starship", "starshipfeature", "starshipmod",
+		],
 	allFlags: {
 		weaponFlags: {
 			critRange: { type: "String", value: "" },
@@ -58,21 +68,6 @@ CONFIG.betterRolls5e = {
 			quickVersatile: { type: "Boolean", value: false, altValue: false },
 			quickProperties: { type: "Boolean", value: true, altValue: true },
 			quickCharges: { type: "Boolean", value: {quantity: false, use: false, resource: true}, altValue: {quantity: false, use: true, resource: true} },
-			quickTemplate: { type: "Boolean", value: true, altValue: true },
-			quickOther: { type: "Boolean", value: true, altValue: true, context: "" },
-			quickFlavor: { type: "Boolean", value: true, altValue: true },
-			quickPrompt: { type: "Boolean", value: false, altValue: false },
-		},
-		spellFlags: {
-			critRange: { type: "String", value: "" },
-			critDamage: { type: "String", value: "" },
-			quickDesc: { type: "Boolean", value: true, altValue: true },
-			quickAttack: { type: "Boolean", value: true, altValue: true },
-			quickSave: { type: "Boolean", value: true, altValue: true },
-			quickDamage: { type: "Array", value: [], altValue: [], context: [] },
-			quickVersatile: { type: "Boolean", value: false, altValue: false },
-			quickProperties: { type: "Boolean", value: true, altValue: true },
-			quickCharges: { type: "Boolean", value: {use: true, resource: true}, altValue: {use: true, resource: true} },
 			quickTemplate: { type: "Boolean", value: true, altValue: true },
 			quickOther: { type: "Boolean", value: true, altValue: true, context: "" },
 			quickFlavor: { type: "Boolean", value: true, altValue: true },
@@ -91,6 +86,62 @@ CONFIG.betterRolls5e = {
 			quickFlavor: { type: "Boolean", value: true, altValue: true },
 			quickPrompt: { type: "Boolean", value: false, altValue: false },
 		},
+		consumableFlags: {
+			critRange: { type: "String", value: "" },
+			critDamage: { type: "String", value: "" },
+			quickDesc: { type: "Boolean", value: true, altValue: true },
+			quickAttack: { type: "Boolean", value: true, altValue: true },
+			quickSave: { type: "Boolean", value: true, altValue: true },
+			quickDamage: { type: "Array", value: [], altValue: [], context: [] },
+			quickProperties: { type: "Boolean", value: true, altValue: true },
+			// Consumables consume uses by default in vanilla 5e
+			quickCharges: { type: "Boolean", value: {quantity: false, use: true, resource: true}, altValue: {quantity: false, use: true, resource: true} },
+			quickTemplate: { type: "Boolean", value: true, altValue: true },
+			quickOther: { type: "Boolean", value: true, altValue: true, context: "" },
+			quickFlavor: { type: "Boolean", value: true, altValue: true },
+			quickPrompt: { type: "Boolean", value: false, altValue: false },
+		},
+		toolFlags: {
+			critRange: { type: "String", value: "" },
+			quickDesc: { type: "Boolean", get value() { return getQuickDescriptionDefault() }, get altValue() { return getQuickDescriptionDefault() } },
+			quickCheck: { type: "Boolean", value: true, altValue: true },
+			quickProperties: { type: "Boolean", value: true, altValue: true },
+			quickFlavor: { type: "Boolean", value: true, altValue: true },
+			quickPrompt: { type: "Boolean", value: false, altValue: false },
+		},
+
+		powerFlags: {
+			critRange: { type: "String", value: "" },
+			critDamage: { type: "String", value: "" },
+			quickDesc: { type: "Boolean", value: true, altValue: true },
+			quickAttack: { type: "Boolean", value: true, altValue: true },
+			quickSave: { type: "Boolean", value: true, altValue: true },
+			quickDamage: { type: "Array", value: [], altValue: [], context: [] },
+			quickVersatile: { type: "Boolean", value: false, altValue: false },
+			quickProperties: { type: "Boolean", value: true, altValue: true },
+			quickCharges: { type: "Boolean", value: {use: true, resource: true}, altValue: {use: true, resource: true} },
+			quickTemplate: { type: "Boolean", value: true, altValue: true },
+			quickOther: { type: "Boolean", value: true, altValue: true, context: "" },
+			quickFlavor: { type: "Boolean", value: true, altValue: true },
+			quickPrompt: { type: "Boolean", value: false, altValue: false },
+		},
+
+		classfeatureFlags: {
+			critRange: { type: "String", value: "" },
+			critDamage: { type: "String", value: "" },
+			quickDesc: { type: "Boolean", value: true, altValue: true },
+			quickAttack: { type: "Boolean", value: true, altValue: true },
+			quickSave: { type: "Boolean", value: true, altValue: true },
+			quickDamage: { type: "Array", value: [], altValue: [], context: [] },
+			quickProperties: { type: "Boolean", value: true, altValue: true },
+			// Feats consume uses by default in vanilla 5e
+			quickCharges: { type: "Boolean", value: {use: true, resource: true, charge: true}, altValue: {use: true, resource: true, charge: true} },
+			quickTemplate: { type: "Boolean", value: true, altValue: true },
+			quickOther: { type: "Boolean", value: true, altValue: true, context: "" },
+			quickFlavor: { type: "Boolean", value: true, altValue: true },
+			quickPrompt: { type: "Boolean", value: false, altValue: false },
+		},
+
 		featFlags: {
 			critRange: { type: "String", value: "" },
 			critDamage: { type: "String", value: "" },
@@ -106,15 +157,8 @@ CONFIG.betterRolls5e = {
 			quickFlavor: { type: "Boolean", value: true, altValue: true },
 			quickPrompt: { type: "Boolean", value: false, altValue: false },
 		},
-		toolFlags: {
-			critRange: { type: "String", value: "" },
-			quickDesc: { type: "Boolean", get value() { return getQuickDescriptionDefault() }, get altValue() { return getQuickDescriptionDefault() } },
-			quickCheck: { type: "Boolean", value: true, altValue: true },
-			quickProperties: { type: "Boolean", value: true, altValue: true },
-			quickFlavor: { type: "Boolean", value: true, altValue: true },
-			quickPrompt: { type: "Boolean", value: false, altValue: false },
-		},
-		consumableFlags: {
+
+		deploymentFlags: {
 			critRange: { type: "String", value: "" },
 			critDamage: { type: "String", value: "" },
 			quickDesc: { type: "Boolean", value: true, altValue: true },
@@ -122,8 +166,127 @@ CONFIG.betterRolls5e = {
 			quickSave: { type: "Boolean", value: true, altValue: true },
 			quickDamage: { type: "Array", value: [], altValue: [], context: [] },
 			quickProperties: { type: "Boolean", value: true, altValue: true },
-			// Consumables consume uses by default in vanilla 5e
-			quickCharges: { type: "Boolean", value: {quantity: false, use: true, resource: true}, altValue: {quantity: false, use: true, resource: true} },
+			// Feats consume uses by default in vanilla 5e
+			quickCharges: { type: "Boolean", value: {use: true, resource: true, charge: true}, altValue: {use: true, resource: true, charge: true} },
+			quickTemplate: { type: "Boolean", value: true, altValue: true },
+			quickOther: { type: "Boolean", value: true, altValue: true, context: "" },
+			quickFlavor: { type: "Boolean", value: true, altValue: true },
+			quickPrompt: { type: "Boolean", value: false, altValue: false },
+		},
+		deploymentfeatureFlags: {
+			critRange: { type: "String", value: "" },
+			critDamage: { type: "String", value: "" },
+			quickDesc: { type: "Boolean", value: true, altValue: true },
+			quickAttack: { type: "Boolean", value: true, altValue: true },
+			quickSave: { type: "Boolean", value: true, altValue: true },
+			quickDamage: { type: "Array", value: [], altValue: [], context: [] },
+			quickProperties: { type: "Boolean", value: true, altValue: true },
+			// Feats consume uses by default in vanilla 5e
+			quickCharges: { type: "Boolean", value: {use: true, resource: true, charge: true}, altValue: {use: true, resource: true, charge: true} },
+			quickTemplate: { type: "Boolean", value: true, altValue: true },
+			quickOther: { type: "Boolean", value: true, altValue: true, context: "" },
+			quickFlavor: { type: "Boolean", value: true, altValue: true },
+			quickPrompt: { type: "Boolean", value: false, altValue: false },
+		},
+		ventureFlags: {
+			critRange: { type: "String", value: "" },
+			critDamage: { type: "String", value: "" },
+			quickDesc: { type: "Boolean", value: true, altValue: true },
+			quickAttack: { type: "Boolean", value: true, altValue: true },
+			quickSave: { type: "Boolean", value: true, altValue: true },
+			quickDamage: { type: "Array", value: [], altValue: [], context: [] },
+			quickProperties: { type: "Boolean", value: true, altValue: true },
+			// Feats consume uses by default in vanilla 5e
+			quickCharges: { type: "Boolean", value: {use: true, resource: true, charge: true}, altValue: {use: true, resource: true, charge: true} },
+			quickTemplate: { type: "Boolean", value: true, altValue: true },
+			quickOther: { type: "Boolean", value: true, altValue: true, context: "" },
+			quickFlavor: { type: "Boolean", value: true, altValue: true },
+			quickPrompt: { type: "Boolean", value: false, altValue: false },
+		},
+
+		fightingstyleFlags: {
+			critRange: { type: "String", value: "" },
+			critDamage: { type: "String", value: "" },
+			quickDesc: { type: "Boolean", value: true, altValue: true },
+			quickAttack: { type: "Boolean", value: true, altValue: true },
+			quickSave: { type: "Boolean", value: true, altValue: true },
+			quickDamage: { type: "Array", value: [], altValue: [], context: [] },
+			quickProperties: { type: "Boolean", value: true, altValue: true },
+			quickCharges: { type: "Boolean", value: {use: true, resource: true, charge: true}, altValue: {use: true, resource: true, charge: true} },
+			quickTemplate: { type: "Boolean", value: true, altValue: true },
+			quickOther: { type: "Boolean", value: true, altValue: true, context: "" },
+			quickFlavor: { type: "Boolean", value: true, altValue: true },
+			quickPrompt: { type: "Boolean", value: false, altValue: false },
+		},
+		fightingmasteryFlags: {
+			critRange: { type: "String", value: "" },
+			critDamage: { type: "String", value: "" },
+			quickDesc: { type: "Boolean", value: true, altValue: true },
+			quickAttack: { type: "Boolean", value: true, altValue: true },
+			quickSave: { type: "Boolean", value: true, altValue: true },
+			quickDamage: { type: "Array", value: [], altValue: [], context: [] },
+			quickProperties: { type: "Boolean", value: true, altValue: true },
+			quickCharges: { type: "Boolean", value: {use: true, resource: true, charge: true}, altValue: {use: true, resource: true, charge: true} },
+			quickTemplate: { type: "Boolean", value: true, altValue: true },
+			quickOther: { type: "Boolean", value: true, altValue: true, context: "" },
+			quickFlavor: { type: "Boolean", value: true, altValue: true },
+			quickPrompt: { type: "Boolean", value: false, altValue: false },
+		},
+		lightsaberformFlags: {
+			critRange: { type: "String", value: "" },
+			critDamage: { type: "String", value: "" },
+			quickDesc: { type: "Boolean", value: true, altValue: true },
+			quickAttack: { type: "Boolean", value: true, altValue: true },
+			quickSave: { type: "Boolean", value: true, altValue: true },
+			quickDamage: { type: "Array", value: [], altValue: [], context: [] },
+			quickProperties: { type: "Boolean", value: true, altValue: true },
+			quickCharges: { type: "Boolean", value: {use: true, resource: true, charge: true}, altValue: {use: true, resource: true, charge: true} },
+			quickTemplate: { type: "Boolean", value: true, altValue: true },
+			quickOther: { type: "Boolean", value: true, altValue: true, context: "" },
+			quickFlavor: { type: "Boolean", value: true, altValue: true },
+			quickPrompt: { type: "Boolean", value: false, altValue: false },
+		},
+
+		starshipFlags: {
+			critRange: { type: "String", value: "" },
+			critDamage: { type: "String", value: "" },
+			quickDesc: { type: "Boolean", value: true, altValue: true },
+			quickAttack: { type: "Boolean", value: true, altValue: true },
+			quickSave: { type: "Boolean", value: true, altValue: true },
+			quickDamage: { type: "Array", value: [], altValue: [], context: [] },
+			quickProperties: { type: "Boolean", value: true, altValue: true },
+			// Feats consume uses by default in vanilla 5e
+			quickCharges: { type: "Boolean", value: {use: true, resource: true, charge: true}, altValue: {use: true, resource: true, charge: true} },
+			quickTemplate: { type: "Boolean", value: true, altValue: true },
+			quickOther: { type: "Boolean", value: true, altValue: true, context: "" },
+			quickFlavor: { type: "Boolean", value: true, altValue: true },
+			quickPrompt: { type: "Boolean", value: false, altValue: false },
+		},
+		starshipfeatureFlags: {
+			critRange: { type: "String", value: "" },
+			critDamage: { type: "String", value: "" },
+			quickDesc: { type: "Boolean", value: true, altValue: true },
+			quickAttack: { type: "Boolean", value: true, altValue: true },
+			quickSave: { type: "Boolean", value: true, altValue: true },
+			quickDamage: { type: "Array", value: [], altValue: [], context: [] },
+			quickProperties: { type: "Boolean", value: true, altValue: true },
+			// Feats consume uses by default in vanilla 5e
+			quickCharges: { type: "Boolean", value: {use: true, resource: true, charge: true}, altValue: {use: true, resource: true, charge: true} },
+			quickTemplate: { type: "Boolean", value: true, altValue: true },
+			quickOther: { type: "Boolean", value: true, altValue: true, context: "" },
+			quickFlavor: { type: "Boolean", value: true, altValue: true },
+			quickPrompt: { type: "Boolean", value: false, altValue: false },
+		},
+		starshipmodFlags: {
+			critRange: { type: "String", value: "" },
+			critDamage: { type: "String", value: "" },
+			quickDesc: { type: "Boolean", value: true, altValue: true },
+			quickAttack: { type: "Boolean", value: true, altValue: true },
+			quickSave: { type: "Boolean", value: true, altValue: true },
+			quickDamage: { type: "Array", value: [], altValue: [], context: [] },
+			quickProperties: { type: "Boolean", value: true, altValue: true },
+			// Feats consume uses by default in vanilla 5e
+			quickCharges: { type: "Boolean", value: {use: true, resource: true, charge: true}, altValue: {use: true, resource: true, charge: true} },
 			quickTemplate: { type: "Boolean", value: true, altValue: true },
 			quickOther: { type: "Boolean", value: true, altValue: true, context: "" },
 			quickFlavor: { type: "Boolean", value: true, altValue: true },
@@ -197,7 +360,7 @@ async function addButtonsToItemLi(li, actor, buttonContainer) {
 	switch (item.data.type) {
 		case 'weapon':
 		case 'feat':
-		case 'spell':
+		case 'power':
 		case 'consumable':
 			buttonsWereAdded = true;
 			buttons.append(
@@ -216,7 +379,7 @@ async function addButtonsToItemLi(li, actor, buttonContainer) {
 
 				buttons.append(
 					createButton({
-						content: `${i18n("br5e.buttons.saveDC")} ${saveData.dc} ${dnd5e.abilities[saveData.ability]}`,
+						content: `${i18n("br5e.buttons.saveDC")} ${saveData.dc} ${sw5e.abilities[saveData.ability]}`,
 						action: "save"
 					})
 				);
@@ -245,7 +408,7 @@ async function addButtonsToItemLi(li, actor, buttonContainer) {
 						let content = `${i}: ${damageString}`;
 
 						if (i === 0 && itemData.damage.versatile) {
-							content += ` (${dnd5e.weaponProperties.ver})`;
+							content += ` (${sw5e.weaponProperties.ver})`;
 						}
 
 						buttons.append(
@@ -362,6 +525,105 @@ async function addButtonsToItemLi(li, actor, buttonContainer) {
 	});
 }
 
+/**
+ * Replaces the sheet's d20 rolls for ability checks, skill checks, and saving throws into dual d20s.
+ * Also replaces the default button on items with a "standard" roll.
+ */
+export function changeRollsToDual (actor, html, data, params) {
+	if (actor && actor.permission < 3) { return; }
+
+	let paramRequests = mergeObject({
+			abilityButton: '.ability-name',
+			checkButton: '.ability-mod',
+			saveButton: '.ability-save',
+			skillButton: '.skill-name',
+			itemButton: '.item:not(.magic-item) .item-image',
+			singleAbilityButton: true
+		},params || {});
+
+	function getAbility(target) {
+		let ability = null;
+		for (let i=0; i <= 3; i++) {
+			ability = target.getAttribute("data-ability");
+			if (ability) { break; }
+			else {
+				target = target.parentElement;
+			}
+		}
+		return ability;
+	}
+
+	// Assign new action to ability check button
+	let abilityName = html.find(paramRequests.abilityButton);
+	if (abilityName.length > 0 && paramRequests.singleAbilityButton === true) {
+		abilityName.off();
+		abilityName.click(event => {
+			event.preventDefault();
+			const ability = getAbility(event.currentTarget);
+			if (event.ctrlKey || event.metaKey) {
+				CustomRoll.rollAttribute(actor, ability, "check");
+			} else if (event.shiftKey) {
+				CustomRoll.rollAttribute(actor, ability, "save");
+			} else {
+				new Dialog({
+					title: `${i18n(sw5e.abilities[ability])} ${i18n("Ability Roll")}`,
+					content: `<p><span style="font-weight: bold;">${i18n(sw5e.abilities[ability])}:</span> ${i18n("What type of roll?")}</p>`,
+					buttons: {
+						test: {
+							label: i18n("Ability Check"),
+							callback: async () => { CustomRoll.rollAttribute(actor, ability, "check"); }
+						},
+						save: {
+							label: i18n("Saving Throw"),
+							callback: async () => { CustomRoll.rollAttribute(actor, ability, "save"); }
+						}
+					}
+				}).render(true);
+			}
+		});
+	}
+
+	// Assign new action to ability button
+	let checkName = html.find(paramRequests.checkButton);
+	if (checkName.length > 0) {
+		checkName.off();
+		checkName.addClass("rollable");
+		checkName.click(async event => {
+			event.preventDefault();
+			let ability = getAbility(event.currentTarget),
+				abl = actor.data.data.abilities[ability],
+				params = Utils.eventToAdvantage(event);
+			CustomRoll.rollAttribute(actor, ability, "check", params);
+		});
+	}
+
+	// Assign new action to save button
+	let saveName = html.find(paramRequests.saveButton);
+	if (saveName.length > 0) {
+		saveName.off();
+		saveName.addClass("rollable");
+		saveName.click(async event => {
+			event.preventDefault();
+			let ability = getAbility(event.currentTarget),
+				abl = actor.data.data.abilities[ability],
+				params = Utils.eventToAdvantage(event);
+			CustomRoll.rollAttribute(actor, ability, "save", params);
+		});
+	}
+
+	// Assign new action to skill button
+	let skillName = html.find(paramRequests.skillButton);
+	if (skillName.length > 0) {
+		skillName.off();
+		skillName.click(async event => {
+			event.preventDefault();
+			let params = Utils.eventToAdvantage(event);
+			let skill = event.currentTarget.parentElement.getAttribute("data-skill");
+			CustomRoll.rollSkill(actor, skill, params);
+		});
+	}
+}
+
 /** Frontend for macros */
 export function BetterRolls() {
 	async function assignMacro(item, slot, mode) {
@@ -379,7 +641,7 @@ if (game.modules.get('itemacro')?.active && itemToRoll.hasMacro()) {
 }
 
 if (!itemToRoll) {
-	return ui.notifications.warn(game.i18n.format("DND5E.ActionWarningNoItem", { item: itemId, name: actorToRoll?.name ?? "[Not Found]" }));
+	return ui.notifications.warn(game.i18n.format("SW5e.ActionWarningNoItem", { item: itemId, name: actorToRoll?.name ?? "[Not Found]" }));
 }
 
 return itemToRoll.roll({ vanilla: ${vanilla} });
@@ -392,7 +654,7 @@ return itemToRoll.roll({ vanilla: ${vanilla} });
 				type: "script",
 				img: item.data.img,
 				command: command(),
-				flags: {"dnd5e.itemMacro": true}
+				flags: {"sw5e.itemMacro": true}
 			}, {displaySheet: false});
 		}
 		game.user.assignHotbarMacro(macro, slot);
@@ -444,14 +706,14 @@ return itemToRoll.roll({ vanilla: ${vanilla} });
 		return event && event.altKey && altSecondaryEnabled;
 	};
 
-	// Prefer synthetic actors over game.actors to avoid consumables and spells being missdepleted.
+	// Prefer synthetic actors over game.actors to avoid consumables and powers being missdepleted.
 	function getActorById(actorId) {
 		let actor = canvas.tokens.placeables.find(t => t.actor?.id === actorId)?.actor;
 		if (!actor) actor = game.actors.get(actorId);
 		return actor;
 	}
 
-	// Prefer token actors over game.actors to avoid consumables and spells being missdepleted.
+	// Prefer token actors over game.actors to avoid consumables and powers being missdepleted.
 	function getActorByName(actorName) {
 		let actor = canvas.tokens.placeables.find(p => p.data.name === actorName)?.actor;
 		if (!actor) actor = game.actors.find(e => e.name === actorName);

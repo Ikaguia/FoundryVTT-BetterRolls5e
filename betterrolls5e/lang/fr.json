@@ -107,7 +107,7 @@
 	"br5e.chat.healing": "Soins",
 	"br5e.chat.altPrefix": "Alt.",
 	"br5e.chat.extraPrefix": "Extra",
-	"br5e.chat.consumedBySpell": "Utilisé par le sort",
+	"br5e.chat.consumedByPower": "Utilisé par le sort",
 	"br5e.chat.abrVocal": "V",
 	"br5e.chat.abrSomatic": "S",
 	"br5e.chat.abrMaterial": "M",

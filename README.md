@@ -1,5 +1,5 @@
 # Better Rolls for 5e - A FoundryVTT Module
-A Foundry VTT module that replaces the built in rolling system for DnD5e. It allows for quick, compounded rolls for items, ability checks saving throws, and just about any roll you might want. Though initially a fork of Hooking's [Item Sheet Buttons](https://gitlab.com/hooking/foundry-vtt---item-sheet-buttons) module, it now includes several roll templates designed for Foundry's 5e sheets to increase speed of play. Felix's Chat Damage Buttons module has also been implemented into core Better Rolls. 
+A Foundry VTT module that replaces the built in rolling system for sw5e. It allows for quick, compounded rolls for items, ability checks saving throws, and just about any roll you might want. Though initially a fork of Hooking's [Item Sheet Buttons](https://gitlab.com/hooking/foundry-vtt---item-sheet-buttons) module, it now includes several roll templates designed for Foundry's 5e sheets to increase speed of play. Felix's Chat Damage Buttons module has also been implemented into core Better Rolls. 
 
 If you are feeling generous, and would like to support my work, you can do so through this [Paypal](https://www.paypal.me/RedReignDonate) link. Thank you!
 
@@ -72,7 +72,7 @@ Extended support for thrown items, consumables, ammunition, and items with other
 ![](https://cdn.discordapp.com/attachments/513918036919713802/635495803787542559/unknown.png)
 
 ### Macro Support
-- Macro support! Try dragging and dropping an item, spell, or feat from your character sheet onto the macro hotbar!
+- Macro support! Try dragging and dropping an item, power, or feat from your character sheet onto the macro hotbar!
 - Script macros are also intuitive enough to be entered manually.
 - Try `BetterRolls.quickRoll("Shortbow");` on a creature with an item named "Shortbow", or `BetterRolls.quickRollByName("Sharon", "Shortbow");` to fire Sharon's shortbow.
 - Check out the samples folder for some example macros.

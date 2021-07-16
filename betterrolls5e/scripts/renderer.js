@@ -227,10 +227,10 @@ export class Renderer {
 		const dtype = CONFIG.betterRolls5e.combinedDamageTypes[damageType];
 
 		let titleString = properties.title ?? "";
-		if (!titleString && CONFIG.DND5E.healingTypes[damageType]) {
+		if (!titleString && CONFIG.SW5E.healingTypes[damageType]) {
 			// Show "Healing" prefix only if it's not inherently a heal action
 			titleString = "";
-		} else if (!titleString && CONFIG.DND5E.damageTypes[damageType]) {
+		} else if (!titleString && CONFIG.SW5E.damageTypes[damageType]) {
 			// Show "Damage" prefix if it's a damage roll
 			titleString += i18n("br5e.chat.damage");
 		}
@@ -260,7 +260,7 @@ export class Renderer {
 			damageStringParts.push(dtype);
 		}
 		if (isVersatile) {
-			damageStringParts.push("(" + CONFIG.DND5E.weaponProperties.ver + ")");
+			damageStringParts.push("(" + CONFIG.SW5E.weaponProperties.ver + ")");
 		}
 
 		const damageString = damageStringParts.join(" ");
@@ -295,7 +295,7 @@ export class Renderer {
 	 * @param {ButtonSaveProps} properties
 	 */
 	static async renderSaveButton(properties) {
-		const abilityLabel = CONFIG.DND5E.abilities[properties.ability];
+		const abilityLabel = CONFIG.SW5E.abilities[properties.ability];
 		return renderModuleTemplate("red-save-button.html", {
 			id: properties.id,
 			abilityLabel,

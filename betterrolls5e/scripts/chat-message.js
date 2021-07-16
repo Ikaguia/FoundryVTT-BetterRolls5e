@@ -368,7 +368,7 @@ export class BetterRollsChatCard {
 
 			window.DAE.doEffects(item, true, targets, {
 				whisper: false,
-				spellLevel: roll.params.slotLevel,
+				powerLevel: roll.params.slotLevel,
 				damageTotal: roll.totalDamage,
 				critical: roll.isCrit,
 				itemCardId: this.id

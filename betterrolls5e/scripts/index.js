@@ -39,8 +39,8 @@ Hooks.on("ready", async () => {
 	await migrate();
 
 	// Make a combined damage type array that includes healing
-	const dnd5e = CONFIG.DND5E;
-	CONFIG.betterRolls5e.combinedDamageTypes = mergeObject(duplicate(dnd5e.damageTypes), dnd5e.healingTypes);
+	const sw5e = CONFIG.SW5E;
+	CONFIG.betterRolls5e.combinedDamageTypes = mergeObject(duplicate(sw5e.damageTypes), sw5e.healingTypes);
 
 	// Updates crit text from the dropdown.
 	let critText = BRSettings.critString;
@@ -67,10 +67,10 @@ Hooks.on("preCreateItem", (item) => ItemUtils.ensureFlags(item));
 // Modify context menu for damage rolls (they break)
 Hooks.on("getChatLogEntryContext", (html, options) => {
 	let contextDamageLabels = [
-		game.i18n.localize("DND5E.ChatContextDamage"),
-		game.i18n.localize("DND5E.ChatContextHealing"),
-		game.i18n.localize("DND5E.ChatContextDoubleDamage"),
-		game.i18n.localize("DND5E.ChatContextHalfDamage")
+		game.i18n.localize("SW5E.ChatContextDamage"),
+		game.i18n.localize("SW5E.ChatContextHealing"),
+		game.i18n.localize("SW5E.ChatContextDoubleDamage"),
+		game.i18n.localize("SW5E.ChatContextHalfDamage")
 	];
 
 	for (let i=options.length-1; i>=0; i--) {

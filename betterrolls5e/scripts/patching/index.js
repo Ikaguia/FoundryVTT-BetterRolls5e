@@ -1,8 +1,8 @@
 import { getSettings } from "../settings.js";
 import { libWrapper } from "./libWrapper.js";
 
-import { d20Roll } from "../../../../systems/dnd5e/module/dice.js";
-import { dnd5e, i18n, Utils } from "../utils/index.js";
+import { d20Roll } from "../../../../systems/sw5e/module/dice.js";
+import { sw5e, i18n, Utils } from "../utils/index.js";
 import { CustomRoll } from "../custom-roll.js";
 
 export function patchCoreFunctions() {
@@ -32,7 +32,7 @@ export function patchCoreFunctions() {
  * @param {*} fn A curried function that takes the original and returns a function to pass to libwrapper
  */
 function override(target, fn) {
-	libWrapper.register("betterrolls5e", target, fn, "OVERRIDE", {chain: true});
+	libWrapper.register("betterrollssw5e", target, fn, "OVERRIDE", {chain: true});
 }
 
 /**
@@ -76,12 +76,12 @@ async function itemRollAttack(defaultRoll, options) {
 		return defaultRoll.bind(this)(options);
 	}
 
-	const flags = this.actor.data.flags.dnd5e || {};
+	const flags = this.actor.data.flags.sw5e || {};
 	if ( !this.hasAttack ) {
 	  throw new Error("You may not place an Attack Roll with this Item.");
 	}
 
-	let title = `${this.name} - ${game.i18n.localize("DND5E.AttackRoll")}`;
+	let title = `${this.name} - ${game.i18n.localize("SW5E.AttackRoll")}`;
 
 	// get the parts and rollData for this item's attack
 	const {parts, rollData} = this.getAttackToHit();
@@ -100,7 +100,7 @@ async function itemRollAttack(defaultRoll, options) {
 		},
 		messageData: {
 			speaker: ChatMessage.getSpeaker({actor: this.actor}),
-			"flags.dnd5e.roll": { type: "attack", itemId: this.id }
+			"flags.sw5e.roll": { type: "attack", itemId: this.id }
 		}
 	}, options);
 	rollConfig.event = options.event;
@@ -108,12 +108,12 @@ async function itemRollAttack(defaultRoll, options) {
 	// Expanded critical hit thresholds
 	if (( this.data.type === "weapon" ) && flags.weaponCriticalThreshold) {
 	  rollConfig.critical = parseInt(flags.weaponCriticalThreshold);
-	} else if (( this.data.type === "spell" ) && flags.spellCriticalThreshold) {
-	  rollConfig.critical = parseInt(flags.spellCriticalThreshold);
+	} else if (( this.data.type === "power" ) && flags.powerCriticalThreshold) {
+	  rollConfig.critical = parseInt(flags.powerCriticalThreshold);
 	}
 
 	// Elven Accuracy
-	if ( ["weapon", "spell"].includes(this.data.type) ) {
+	if ( ["weapon", "power"].includes(this.data.type) ) {
 	  if (flags.elvenAccuracy && ["dex", "int", "wis", "cha"].includes(this.abilityMod)) {
 		rollConfig.elvenAccuracy = true;
 	  }
@@ -151,7 +151,7 @@ async function actorRollSkill(original, skillId, options) {
 		...Utils.getRollState(options),
 	});
 
-	return CustomRoll._fullRollActor(this, i18n(dnd5e.skills[skillId]), roll);
+	return CustomRoll._fullRollActor(this, i18n(sw5e.skills[skillId]), roll);
 }
 
 async function actorRollAbilityTest(original, ability, options) {
@@ -166,7 +166,7 @@ async function actorRollAbilityTest(original, ability, options) {
 		...Utils.getRollState(options),
 	});
 
-	const label = `${i18n(dnd5e.abilities[ability])} ${i18n("br5e.chat.check")}`;
+	const label = `${i18n(sw5e.abilities[ability])} ${i18n("br5e.chat.check")}`;
 	return CustomRoll._fullRollActor(this, label, roll);
 }
 
@@ -182,6 +182,6 @@ async function actorRollAbilitySave(original, ability, options) {
 		...Utils.getRollState(options),
 	});
 
-	const label = `${i18n(dnd5e.abilities[ability])} ${i18n("br5e.chat.save")}`;
+	const label = `${i18n(sw5e.abilities[ability])} ${i18n("br5e.chat.save")}`;
 	return CustomRoll._fullRollActor(this, label, roll);
 }

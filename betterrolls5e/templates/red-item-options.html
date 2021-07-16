@@ -17,10 +17,10 @@
 		<label>{{localize "br5e.settings.critDamage.name"}}</label>
 		<select name="flags.betterRolls5e.critDamage.value">
 			{{#select flags.betterRolls5e.critDamage.value}}
-			<option value="">{{ localize "DND5E.None" }}</option>
+			<option value="">{{ localize "SW5E.None" }}</option>
 	  		{{#each flags.betterRolls5e.quickDamage.value as |part i| }}
 			<option value="{{i}}">
-				{{i}}: {{lookup ../flags.betterRolls5e.quickDamage.context i}} ({{lookup ../DND5E.damageTypes (lookup (lookup ../item.data.data.damage.parts i) 1)}})
+				{{i}}: {{lookup ../flags.betterRolls5e.quickDamage.context i}} ({{lookup ../SW5E.damageTypes (lookup (lookup ../item.data.data.damage.parts i) 1)}})
 			</option>
 			{{/each}}
 			{{/select}}
@@ -121,7 +121,7 @@
 				data-dtype="{{flags.betterRolls5e.quickVersatile.type}}"
 				{{checked flags.betterRolls5e.quickVersatile.value}}
 			/>
-			{{localize DND5E.weaponProperties.ver}}
+			{{localize SW5E.weaponProperties.ver}}
 		</label>
 		{{/if}}
 
@@ -237,7 +237,7 @@
 				data-dtype="Boolean"
 				{{checked (lookup ../flags.betterRolls5e.quickDamage.value i)}}
 			/>
-			{{i}}: {{lookup ../flags.betterRolls5e.quickDamage.context i}} ({{lookup ../DND5E.damageTypes (lookup (lookup ../item.data.data.damage.parts i) 1)}})
+			{{i}}: {{lookup ../flags.betterRolls5e.quickDamage.context i}} ({{lookup ../SW5E.damageTypes (lookup (lookup ../item.data.data.damage.parts i) 1)}})
 		</label>
 		{{/each}}
 		{{/if}}
@@ -339,7 +339,7 @@
 				data-dtype="{{flags.betterRolls5e.quickVersatile.type}}"
 				{{checked flags.betterRolls5e.quickVersatile.altValue}}
 			/>
-			{{localize DND5E.weaponProperties.ver}}
+			{{localize SW5E.weaponProperties.ver}}
 		</label>
 		{{/if}}
 
@@ -454,7 +454,7 @@
 				data-dtype="Boolean"
 				{{checked (lookup ../flags.betterRolls5e.quickDamage.altValue i)}}
 			/>
-			{{i}}: {{lookup ../flags.betterRolls5e.quickDamage.context i}} ({{lookup ../DND5E.damageTypes (lookup (lookup ../item.data.data.damage.parts i) 1)}})
+			{{i}}: {{lookup ../flags.betterRolls5e.quickDamage.context i}} ({{lookup ../SW5E.damageTypes (lookup (lookup ../item.data.data.damage.parts i) 1)}})
 		</label>
 		{{/each}}
 		{{/if}}

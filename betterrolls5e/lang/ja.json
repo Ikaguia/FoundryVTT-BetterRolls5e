@@ -142,7 +142,7 @@
 	"br5e.chat.healing": "回復",
 	"br5e.chat.altPrefix": "サブ",
 	"br5e.chat.extraPrefix": "追加",
-	"br5e.chat.consumedBySpell": "呪文により消費",
+	"br5e.chat.consumedByPower": "呪文により消費",
 	"br5e.chat.abrVocal": "音声",
 	"br5e.chat.abrSomatic": "動作",
 	"br5e.chat.abrMaterial": "物質",
