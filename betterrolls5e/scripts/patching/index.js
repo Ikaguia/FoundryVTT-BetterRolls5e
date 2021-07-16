@@ -26,7 +26,7 @@ export function patchCoreFunctions() {
  * @param {*} fn A curried function that takes the original and returns a function to pass to libwrapper
  */
 function override(target, fn) {
-	libWrapper.register("betterrolls5e", target, fn, "OVERRIDE", {chain: true});
+	libWrapper.register("betterrollssw5e", target, fn, "OVERRIDE", {chain: true});
 }
 
 /**
@@ -102,12 +102,12 @@ async function itemRollAttack(defaultRoll, options) {
 	// Expanded critical hit thresholds
 	if (( this.data.type === "weapon" ) && flags.weaponCriticalThreshold) {
 	  rollConfig.critical = parseInt(flags.weaponCriticalThreshold);
-	} else if (( this.data.type === "spell" ) && flags.spellCriticalThreshold) {
-	  rollConfig.critical = parseInt(flags.spellCriticalThreshold);
+	} else if (( this.data.type === "power" ) && flags.powerCriticalThreshold) {
+	  rollConfig.critical = parseInt(flags.powerCriticalThreshold);
 	}
 
 	// Elven Accuracy
-	if ( ["weapon", "spell"].includes(this.data.type) ) {
+	if ( ["weapon", "power"].includes(this.data.type) ) {
 	  if (flags.elvenAccuracy && ["dex", "int", "wis", "cha"].includes(this.abilityMod)) {
 		rollConfig.elvenAccuracy = true;
 	  }
