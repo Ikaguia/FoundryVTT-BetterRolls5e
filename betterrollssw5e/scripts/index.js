@@ -1,6 +1,6 @@
 import { BRSettings } from "./settings.js";
 import { BetterRollsChatCard } from "./chat-message.js";
-import { addItemSheetButtons, BetterRolls } from "./betterrolls5e.js";
+import { addItemSheetButtons, BetterRolls } from "./betterrollssw5e.js";
 import { ItemUtils, Utils } from "./utils/index.js";
 import { addBetterRollsContent } from "./item-tab.js";
 import { patchCoreFunctions } from "./patching/index.js"

@@ -1,6 +1,6 @@
 import { sw5e, i18n, ActorUtils, ItemUtils, Utils } from "./utils/index.js";
 import { BRSettings, getSettings } from "./settings.js";
-import { isSave } from "./betterrolls5e.js";
+import { isSave } from "./betterrollssw5e.js";
 
 /**
  * Roll type for advantage/disadvantage/etc

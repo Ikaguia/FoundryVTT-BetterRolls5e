@@ -19,9 +19,9 @@ export function patchCoreFunctions() {
 	override("CONFIG.Item.documentClass.prototype.roll", itemRoll);
 	override("CONFIG.Item.documentClass.prototype.rollAttack", itemRollAttack);
 	override("CONFIG.Item.documentClass.prototype.rollToolCheck", itemRollToolCheck);
-	libWrapper.register("betterrolls5e", `${actorProto}.rollSkill`, actorRollSkill, "MIXED");
-	libWrapper.register("betterrolls5e", `${actorProto}.rollAbilityTest`, actorRollAbilityTest, "MIXED");
-	libWrapper.register("betterrolls5e", `${actorProto}.rollAbilitySave`, actorRollAbilitySave, "MIXED");
+	libWrapper.register("betterrollssw5e", `${actorProto}.rollSkill`, actorRollSkill, "MIXED");
+	libWrapper.register("betterrollssw5e", `${actorProto}.rollAbilityTest`, actorRollAbilityTest, "MIXED");
+	libWrapper.register("betterrollssw5e", `${actorProto}.rollAbilitySave`, actorRollAbilitySave, "MIXED");
 }
 
 /**

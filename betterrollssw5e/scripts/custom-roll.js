@@ -1,4 +1,4 @@
-import { isAttack, isSave, isCheck } from "./betterrolls5e.js";
+import { isAttack, isSave, isCheck } from "./betterrollssw5e.js";
 import {
 	sw5e,
 	i18n,

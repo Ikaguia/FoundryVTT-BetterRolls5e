@@ -1,4 +1,4 @@
-import { isSave } from "../betterrolls5e.js";
+import { isSave } from "../betterrollssw5e.js";
 import { getSettings } from "../settings.js";
 import { SW5E } from "../../../../systems/sw5e/module/config.js";
 

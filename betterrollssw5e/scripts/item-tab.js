@@ -1,4 +1,4 @@
-import { isAttack, isSave } from "./betterrolls5e.js";
+import { isAttack, isSave } from "./betterrollssw5e.js";
 import { i18n, ItemUtils } from "./utils/index.js";
 
 let activate = false;

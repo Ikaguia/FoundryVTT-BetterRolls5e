@@ -18,7 +18,7 @@ jobs:
 
       # create a zip file with all files required by the module to add to the release
       - name: Zip Files
-        working-directory: ./betterrolls5e
+        working-directory: ./betterrollssw5e
         run: zip -r ./module.zip ./*
 
       # Get the version from 'module.json'
@@ -46,7 +46,7 @@ jobs:
           draft: false
           prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: './betterrolls5e/module.json,./betterrolls5e/module.zip'
+          artifacts: './betterrollssw5e/module.json,./betterrollssw5e/module.zip'
           tag_name: ${{ steps.get-version.outputs.version }}
 
       # Update the 'latest' release
@@ -60,5 +60,5 @@ jobs:
           draft: false
           prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: './betterrolls5e/module.json,./betterrolls5e/module.zip'
+          artifacts: './betterrollssw5e/module.json,./betterrollssw5e/module.zip'
           tag: latest
