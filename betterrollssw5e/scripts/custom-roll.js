@@ -1208,6 +1208,7 @@ export class CustomItemRoll {
 		const itemData = item.data.data;
 		const hasUses = !!(Number(itemData.uses?.value) || itemData.uses?.per); // Actual check to see if uses exist on the item, even if params.useCharge.use == true
 		const hasResource = !!(itemData.consume?.target); // Actual check to see if a resource is entered on the item, even if params.useCharge.resource == true
+		const hasRecharge = !!(itemData.recharge?.value);
 
 		const request = this.params.useCharge; // Has bools for quantity, use, resource, and charge
 		const recharge = itemData.recharge || {};
@@ -1221,7 +1222,7 @@ export class CustomItemRoll {
 		const consumeResource = hasResource && request.resource && itemData.consume.type !== "ammo";
 		const consumeUsage = request.use && hasUses;
 		const consumeQuantity = request.quantity || autoDestroy;
-		const consumeCharge = request.charge && recharge.value;
+		const consumeCharge = request.charge && hasRecharge;
 
 		// Check for consuming quantity, but not uses
 		if (request.quantity && !consumeUsage) {
@@ -1260,7 +1261,7 @@ export class CustomItemRoll {
 		}
 
 		// Handle charge ("Action Recharge")
-		if (request.charge) {
+		if (consumeCharge) {
 			itemUpdates["data.recharge.charged"] = false;
 		}
 

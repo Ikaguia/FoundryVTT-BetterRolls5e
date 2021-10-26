@@ -305,7 +305,7 @@ export async function addItemSheetButtons(actor, html, data, triggeringElement =
 	if (actor.permission < 3) { return; }
 
 	// Setting default element selectors
-	if (triggeringElement === '') triggeringElement = '.item:not(.magic-item) .item-name h4';
+	if (triggeringElement === '') triggeringElement = '.item:not(.enhanced-item) .item-name h4';
 	if (buttonContainer === '') buttonContainer = '.item-properties';
 
 	// adding an event for when the description is shown
@@ -315,7 +315,7 @@ export async function addItemSheetButtons(actor, html, data, triggeringElement =
 	});
 
 	for (let element of html.find(triggeringElement)) {
-		let li = $(element).parents('.item:not(.magic-item)');
+		let li = $(element).parents('.item:not(.enhanced-item)');
 		addButtonsToItemLi(li, actor, buttonContainer);
 	}
 }
@@ -342,6 +342,10 @@ async function addButtonsToItemLi(li, actor, buttonContainer) {
 	}
 
 	const item = actor.items.get(itemId);
+	if (!item) {
+		return;
+	}
+
 	const itemData = item.data.data;
 	const flags = item.data.flags.betterRollssw5e;
 
@@ -537,7 +541,7 @@ export function changeRollsToDual (actor, html, data, params) {
 			checkButton: '.ability-mod',
 			saveButton: '.ability-save',
 			skillButton: '.skill-name',
-			itemButton: '.item:not(.magic-item) .item-image',
+			itemButton: '.item:not(.enhanced-item) .item-image',
 			singleAbilityButton: true
 		},params || {});
 
