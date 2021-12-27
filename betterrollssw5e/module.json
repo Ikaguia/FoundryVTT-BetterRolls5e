@@ -1,0 +1,72 @@
+{
+  "name": "betterrollssw5e",
+  "title": "Better Rolls for sw5e",
+  "description": "This module overhauls rolls for the sw5e system, allowing \"dual rolls\" for d20 rolls, buttons that support full output to chat, and customization for said outputs.",
+  "author": "Ikaguia#2965",
+  "url": "https://github.com/Ikaguia/FoundryVTT-BetterRollssw5e/tree/master/betterrollssw5e",
+  "flags": {},
+  "version": "1.6.11.1",
+  "minimumCoreVersion": "0.8.6",
+  "compatibleCoreVersion": "0.8.9",
+  "scripts": [
+    "greensock/dist/gsap.min.js"
+  ],
+  "esmodules": [
+    "./scripts/index.js"
+  ],
+  "styles": [
+    "./css/betterrollssw5e.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    },
+    {
+      "lang": "fr",
+      "name": "Français (French)",
+      "path": "lang/fr.json"
+    },
+    {
+      "lang": "es",
+      "name": "Español (Spanish)",
+      "path": "lang/es.json"
+    },
+    {
+      "lang": "pt-BR",
+      "name": "Português (Brasil)",
+      "path": "lang/pt-BR.json"
+    },
+    {
+      "lang": "de",
+      "name": "Deutsch (German)",
+      "path": "lang/de.json"
+    },
+    {
+      "lang": "ja",
+      "name": "日本語 (Japanese)",
+      "path": "lang/ja.json"
+    },
+    {
+      "lang": "ko",
+      "name": "한국어 (Korean)",
+      "path": "lang/ko.json"
+    },
+    {
+      "lang": "cs",
+      "name": "Česky",
+      "path": "lang/cs.json"
+    }
+  ],
+  "packs": [],
+  "system": [
+    "sw5e"
+  ],
+  "dependencies": [],
+  "socket": true,
+  "manifest": "https://raw.githubusercontent.com/Ikaguia/FoundryVTT-BetterRollssw5e/master/betterrollssw5e/module.json",
+  "download": "https://github.com/Ikaguia/FoundryVTT-BetterRollssw5e/releases/download/v1.6.11.1/module.zip",
+  "protected": false,
+  "coreTranslation": false
+}
