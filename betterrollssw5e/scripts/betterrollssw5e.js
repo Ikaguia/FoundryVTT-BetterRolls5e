@@ -59,8 +59,6 @@ CONFIG.betterRollssw5e = {
 		],
 	allFlags: {
 		weaponFlags: {
-			critRange: { type: "String", value: "" },
-			critDamage: { type: "String", value: "" },
 			quickDesc: { type: "Boolean", get value() { return getQuickDescriptionDefault() }, get altValue() { return getQuickDescriptionDefault() } },
 			quickAttack: { type: "Boolean", value: true, altValue: true },
 			quickSave: { type: "Boolean", value: true, altValue: true },
@@ -74,8 +72,6 @@ CONFIG.betterRollssw5e = {
 			quickPrompt: { type: "Boolean", value: false, altValue: false },
 		},
 		equipmentFlags: {
-			critRange: { type: "String", value: "" },
-			critDamage: { type: "String", value: "" },
 			quickDesc: { type: "Boolean", value: true, altValue: true },
 			quickAttack: { type: "Boolean", value: true, altValue: true },
 			quickSave: { type: "Boolean", value: true, altValue: true },
@@ -87,8 +83,6 @@ CONFIG.betterRollssw5e = {
 			quickPrompt: { type: "Boolean", value: false, altValue: false },
 		},
 		consumableFlags: {
-			critRange: { type: "String", value: "" },
-			critDamage: { type: "String", value: "" },
 			quickDesc: { type: "Boolean", value: true, altValue: true },
 			quickAttack: { type: "Boolean", value: true, altValue: true },
 			quickSave: { type: "Boolean", value: true, altValue: true },
@@ -102,7 +96,6 @@ CONFIG.betterRollssw5e = {
 			quickPrompt: { type: "Boolean", value: false, altValue: false },
 		},
 		toolFlags: {
-			critRange: { type: "String", value: "" },
 			quickDesc: { type: "Boolean", get value() { return getQuickDescriptionDefault() }, get altValue() { return getQuickDescriptionDefault() } },
 			quickCheck: { type: "Boolean", value: true, altValue: true },
 			quickProperties: { type: "Boolean", value: true, altValue: true },
@@ -111,8 +104,6 @@ CONFIG.betterRollssw5e = {
 		},
 
 		powerFlags: {
-			critRange: { type: "String", value: "" },
-			critDamage: { type: "String", value: "" },
 			quickDesc: { type: "Boolean", value: true, altValue: true },
 			quickAttack: { type: "Boolean", value: true, altValue: true },
 			quickSave: { type: "Boolean", value: true, altValue: true },
@@ -125,10 +116,7 @@ CONFIG.betterRollssw5e = {
 			quickFlavor: { type: "Boolean", value: true, altValue: true },
 			quickPrompt: { type: "Boolean", value: false, altValue: false },
 		},
-
 		classfeatureFlags: {
-			critRange: { type: "String", value: "" },
-			critDamage: { type: "String", value: "" },
 			quickDesc: { type: "Boolean", value: true, altValue: true },
 			quickAttack: { type: "Boolean", value: true, altValue: true },
 			quickSave: { type: "Boolean", value: true, altValue: true },
@@ -143,8 +131,6 @@ CONFIG.betterRollssw5e = {
 		},
 
 		featFlags: {
-			critRange: { type: "String", value: "" },
-			critDamage: { type: "String", value: "" },
 			quickDesc: { type: "Boolean", value: true, altValue: true },
 			quickAttack: { type: "Boolean", value: true, altValue: true },
 			quickSave: { type: "Boolean", value: true, altValue: true },
@@ -159,8 +145,6 @@ CONFIG.betterRollssw5e = {
 		},
 
 		deploymentFlags: {
-			critRange: { type: "String", value: "" },
-			critDamage: { type: "String", value: "" },
 			quickDesc: { type: "Boolean", value: true, altValue: true },
 			quickAttack: { type: "Boolean", value: true, altValue: true },
 			quickSave: { type: "Boolean", value: true, altValue: true },
@@ -174,8 +158,6 @@ CONFIG.betterRollssw5e = {
 			quickPrompt: { type: "Boolean", value: false, altValue: false },
 		},
 		deploymentfeatureFlags: {
-			critRange: { type: "String", value: "" },
-			critDamage: { type: "String", value: "" },
 			quickDesc: { type: "Boolean", value: true, altValue: true },
 			quickAttack: { type: "Boolean", value: true, altValue: true },
 			quickSave: { type: "Boolean", value: true, altValue: true },
@@ -189,8 +171,6 @@ CONFIG.betterRollssw5e = {
 			quickPrompt: { type: "Boolean", value: false, altValue: false },
 		},
 		ventureFlags: {
-			critRange: { type: "String", value: "" },
-			critDamage: { type: "String", value: "" },
 			quickDesc: { type: "Boolean", value: true, altValue: true },
 			quickAttack: { type: "Boolean", value: true, altValue: true },
 			quickSave: { type: "Boolean", value: true, altValue: true },
@@ -205,8 +185,6 @@ CONFIG.betterRollssw5e = {
 		},
 
 		fightingstyleFlags: {
-			critRange: { type: "String", value: "" },
-			critDamage: { type: "String", value: "" },
 			quickDesc: { type: "Boolean", value: true, altValue: true },
 			quickAttack: { type: "Boolean", value: true, altValue: true },
 			quickSave: { type: "Boolean", value: true, altValue: true },
@@ -219,8 +197,6 @@ CONFIG.betterRollssw5e = {
 			quickPrompt: { type: "Boolean", value: false, altValue: false },
 		},
 		fightingmasteryFlags: {
-			critRange: { type: "String", value: "" },
-			critDamage: { type: "String", value: "" },
 			quickDesc: { type: "Boolean", value: true, altValue: true },
 			quickAttack: { type: "Boolean", value: true, altValue: true },
 			quickSave: { type: "Boolean", value: true, altValue: true },
@@ -233,8 +209,6 @@ CONFIG.betterRollssw5e = {
 			quickPrompt: { type: "Boolean", value: false, altValue: false },
 		},
 		lightsaberformFlags: {
-			critRange: { type: "String", value: "" },
-			critDamage: { type: "String", value: "" },
 			quickDesc: { type: "Boolean", value: true, altValue: true },
 			quickAttack: { type: "Boolean", value: true, altValue: true },
 			quickSave: { type: "Boolean", value: true, altValue: true },
@@ -248,8 +222,6 @@ CONFIG.betterRollssw5e = {
 		},
 
 		starshipFlags: {
-			critRange: { type: "String", value: "" },
-			critDamage: { type: "String", value: "" },
 			quickDesc: { type: "Boolean", value: true, altValue: true },
 			quickAttack: { type: "Boolean", value: true, altValue: true },
 			quickSave: { type: "Boolean", value: true, altValue: true },
@@ -263,8 +235,6 @@ CONFIG.betterRollssw5e = {
 			quickPrompt: { type: "Boolean", value: false, altValue: false },
 		},
 		starshipfeatureFlags: {
-			critRange: { type: "String", value: "" },
-			critDamage: { type: "String", value: "" },
 			quickDesc: { type: "Boolean", value: true, altValue: true },
 			quickAttack: { type: "Boolean", value: true, altValue: true },
 			quickSave: { type: "Boolean", value: true, altValue: true },
@@ -278,8 +248,6 @@ CONFIG.betterRollssw5e = {
 			quickPrompt: { type: "Boolean", value: false, altValue: false },
 		},
 		starshipmodFlags: {
-			critRange: { type: "String", value: "" },
-			critDamage: { type: "String", value: "" },
 			quickDesc: { type: "Boolean", value: true, altValue: true },
 			quickAttack: { type: "Boolean", value: true, altValue: true },
 			quickSave: { type: "Boolean", value: true, altValue: true },
@@ -518,7 +486,7 @@ async function addButtonsToItemLi(li, actor, buttonContainer) {
 			case 'otherFormulaRoll':
 				fields.push(["other"]); break;
 			case 'infoRoll':
-				fields.push(["header"], ["desc"]); params.consume = false; params.properties = true; break;
+				fields.push(["header"], ["desc"]); params.consume = false; params.properties = true; params.infoOnly = true; break;
 			case 'vanillaRoll':
 				item.roll({ vanilla: true });
 		}
@@ -640,7 +608,7 @@ const itemId = "${item.data._id}";
 const actorToRoll = canvas.tokens.placeables.find(t => t.actor?.id === actorId)?.actor ?? game.actors.get(actorId);
 const itemToRoll = actorToRoll?.items.get(itemId);
 
-if (game.modules.get('itemacro')?.active && itemToRoll.hasMacro()) {
+if (game.modules.get('itemacro')?.active && itemToRoll?.hasMacro() && game.settings.get('itemacro', 'defaultmacro')) {
 	return itemToRoll.executeMacro();
 }
 

@@ -80,12 +80,13 @@ export class RollFields {
 			// Split the D20 and bonuses. We assume the first is a d20 roll always...
 			const fullRoll = new Roll(formula);
 			const baseRoll = new Roll(fullRoll.terms[0].formula ?? fullRoll.terms[0]);
-			const bonusRoll = new Roll([...fullRoll.terms.slice(1).map(t => t.formula ?? t)].join(' ') || "0").roll();
+			const bonusRollFormula = [...fullRoll.terms.slice(1).map(t => t.formula ?? t)].join(' ') || "0";
+			const bonusRoll = new Roll(bonusRollFormula).roll({async: false});
 
 			// Populate the roll entries
 			const entries = [];
 			for (let i = 0; i < numRolls; i++) {
-				entries.push(Utils.processRoll(baseRoll.reroll(), critThreshold, [20], bonusRoll));
+				entries.push(Utils.processRoll(baseRoll.reroll({async: false}), critThreshold, [20], bonusRoll));
 			}
 
 			// Mark ignored rolls if advantage/disadvantage
@@ -269,7 +270,7 @@ export class RollFields {
 		// Assemble roll data and defer to the general damage construction
 		try {
 			const rollFormula = [formula, ...parts].join("+");
-			const baseRoll = new Roll(rollFormula, rollData).roll();
+			const baseRoll = new Roll(rollFormula, rollData).roll({async: false});
 			const total = baseRoll.total;
 
 			// Roll crit damage if relevant
@@ -326,12 +327,7 @@ export class RollFields {
 
 		// If no formula was given, derive from the item
 		if (!formula && item) {
-			const itemData = item.data.data;
-			const flags = item.data.flags.betterRollssw5e;
-			const damageIndex = Number(options.damageIndex ?? flags.critDamage?.value);
-			formula = itemData.damage.parts[damageIndex][0];
-			damageType = damageType ?? itemData.damage.parts[damageIndex][1];
-			context = context ?? flags.quickDamage.context?.[damageIndex];
+			formula = item.data.data.critical?.damage;
 		}
 
 		// Require a formula to continue
@@ -341,7 +337,7 @@ export class RollFields {
 
 		// Assemble roll data and defer to the general damage construction
 		try {
-			const critRoll = new Roll(formula, rollData).roll();
+			const critRoll = new Roll(formula, rollData).roll({async: false});
 
 			return {
 				type: "crit",

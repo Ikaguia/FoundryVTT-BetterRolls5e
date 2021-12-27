@@ -129,7 +129,8 @@ let defaultParams = {
 	event: null,
 	advantage: 0,
 	disadvantage: 0,
-	consume: true
+	consume: true,
+	infoOnly: false,
 };
 
 /*
@@ -217,6 +218,7 @@ export class CustomItemRoll {
 	}
 
 	set item(item) {
+		ItemUtils.ensureFlags(item);
 		this._item = item;
 		this.itemId = item.id;
 		this.actor = item?.actor;
@@ -271,6 +273,7 @@ export class CustomItemRoll {
 		}
 
 		this._item = item; // store a backup so we don't need to fetch again
+		ItemUtils.ensureFlags(item);
 		return item;
 	}
 
@@ -566,7 +569,7 @@ export class CustomItemRoll {
 
 		// Add more rolls if necessary
 		while (multiroll.entries?.length < numRolls) {
-			const roll = multiroll.entries[0].roll.reroll();
+			const roll = multiroll.entries[0].roll.reroll({ async: false });
 			multiroll.entries.push(Utils.processRoll(roll, multiroll.critThreshold, [20], multiroll.bonus));
 			this.dicePool.push(roll);
 		}
@@ -611,8 +614,6 @@ export class CustomItemRoll {
 
 		// Pre-update item configurations which updates the params
 		if (item) {
-			await ItemUtils.ensureFlags(item, { commit: true });
-
 			// Set up preset but only if there aren't fields
 			if (!this.fields || this.fields.length === 0) {
 				this.params.preset = this.params.preset ?? 0;
@@ -641,7 +642,7 @@ export class CustomItemRoll {
 		// Update item casted level property to match the slot level
 		// This ensure things like the property list showing the correct power level
 		if (item && this.params.slotLevel) {
-			item.data.update({ 'data.castedLevel': this.params.slotLevel });
+			item.data.data.castedLevel = this.params.slotLevel;
 		}
 
 		// Show Advantage/Normal/Disadvantage dialog if enabled
@@ -839,7 +840,7 @@ export class CustomItemRoll {
 			...Utils.getWhisperData(rollMode),
 
 			// If not blank, D&D will try to modify the card...
-			roll: new Roll("0").roll()
+			roll: new Roll("0").roll({ async: false })
 		};
 
 		await Hooks.callAll("messageBetterRolls", this, chatData);
@@ -1105,9 +1106,7 @@ export class CustomItemRoll {
 			}
 			if (flagIsTrue("quickTemplate")) { useTemplate = true; }
 
-			if (quickDamage.length > 0 && brFlags.critDamage?.value) {
-				fields.push(["crit"]);
-			}
+			fields.push(["crit"]);
 		} else {
 			//console.log("Request made to Quick Roll item without flags!");
 			fields.push(["desc"]);

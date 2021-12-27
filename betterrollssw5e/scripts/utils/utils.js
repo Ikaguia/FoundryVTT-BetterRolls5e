@@ -420,9 +420,8 @@ export class ItemUtils {
 	static getCritThreshold(item) {
 		if (!item) return null;
 
-		// Get item crit. If its a weapon or power, it might have a SW5E flag to change the range
-		// We take the smallest item crit value
-		let itemCrit = Number(getProperty(item, "data.flags.betterRollssw5e.critRange.value")) || 20;
+		// Get item crit, favoring the smaller between it and the actor's crit threshold
+		let itemCrit = item.data.data.critical?.threshold || 20;
 		const characterCrit = ActorUtils.getCritThreshold(item.actor, item.data.type);
 		return Math.min(20, characterCrit, itemCrit);
 	}
@@ -468,19 +467,13 @@ export class ItemUtils {
 
 	/**
 	 * Ensures that better rolls flag data is set on the item if applicable.
-	 * Performs an item update if anything was set and commit is true
-	 * @param {Item} itemData item to update
-	 * @param {boolean} commit whether to update at the end or not
+	 * Does not perform an item update, only assigns to data
+	 * @param {Item} item item to update flags for
 	 */
-	static async ensureFlags(item, { commit=true } = {}) {
+	static ensureFlags(item) {
 		const flags = this.createFlags(item?.data);
 		if (!flags) return;
 		item.data.flags.betterRollssw5e = flags;
-
-		// Save the updates. Foundry checks for diffs to avoid unnecessary updates
-		if (commit) {
-			await item.data.update({ "flags.betterRollssw5e": flags }, { diff: true });
-		}
 	}
 
 	/**
@@ -604,8 +597,16 @@ export class ItemUtils {
 	static getBaseCritRoll(baseFormula) {
 		if (!baseFormula) return null;
 
-		const critFormula = baseFormula.replace(/[+-]+\s*(?:@[a-zA-Z0-9.]+|[0-9]+(?![Dd]))/g,"").concat();
-		let critRoll = new Roll(critFormula);
+		// Remove all flavor from the formula so we can use the regex
+		// In the future, go through the terms to determine the bonus crit damage instead
+		const strippedRoll = new Roll(baseFormula);
+		for (const term of strippedRoll.terms) {
+			if (term.options) term.options = {};
+		}
+
+		const critRegex = /[+-]+\s*(?:@[a-zA-Z0-9.]+|[0-9]+(?![Dd]))/g;
+		const critFormula = strippedRoll.formula.replace(critRegex, "").concat();
+		const critRoll = new Roll(critFormula);
 		if (critRoll.terms.length === 1 && typeof critRoll.terms[0] === "number") {
 			return null;
 		}
@@ -626,30 +627,30 @@ export class ItemUtils {
 		if (!critRoll) return null;
 
 		critRoll.alter(1, extraCritDice ?? 0);
-		critRoll.roll();
+		critRoll.roll({async: false});
 
 		const { critBehavior } = getSettings(settings);
 
 		// If critBehavior = 2, maximize base dice
 		if (critBehavior === "2") {
-			critRoll = new Roll(critRoll.formula).evaluate({maximize:true});
+			critRoll = new Roll(critRoll.formula).evaluate({maximize:true, async: false});
 		}
 
 		// If critBehavior = 3, maximize base and maximize crit dice
-		// Need to get the difference because we're not able to change the base roll from here so we add it to the critical roll 
+		// Need to get the difference because we're not able to change the base roll from here so we add it to the critical roll
 		else if (critBehavior === "3") {
-			let maxDifference = new Roll(baseFormula).evaluate({maximize:true}).total - baseTotal;
+			let maxDifference = new Roll(baseFormula).evaluate({maximize:true, async: false}).total - baseTotal;
 			let newFormula = critRoll.formula + "+" + maxDifference.toString();
-			critRoll = new Roll(newFormula).evaluate({maximize:true});
+			critRoll = new Roll(newFormula).evaluate({maximize:true, async: false});
 		}
 
 		// If critBehavior = 4, maximize base dice and roll crit dice
 		// Need to get the difference because we're not able to change the base roll from here so we add it to the critical roll
 		else if (critBehavior === "4") {
-			let maxRoll = new Roll(baseFormula).evaluate({maximize:true});
+			let maxRoll = new Roll(baseFormula).evaluate({maximize:true, async: false});
 			let maxDifference = maxRoll.total - baseTotal;
 			let newFormula = critRoll.formula + "+" + maxDifference.toString();
-			critRoll = new Roll(newFormula).evaluate();
+			critRoll = new Roll(newFormula).evaluate({async: false});
 		}
 
 		return critRoll;
