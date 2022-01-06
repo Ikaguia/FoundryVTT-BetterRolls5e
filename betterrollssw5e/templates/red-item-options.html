@@ -92,7 +92,7 @@
 				data-dtype="{{flags.betterRollssw5e.quickVersatile.type}}"
 				{{checked flags.betterRollssw5e.quickVersatile.value}}
 			/>
-			{{localize DND5E.weaponProperties.ver}}
+			{{localize SW5E.weaponProperties.ver}}
 		</label>
 		{{/if}}
 
@@ -208,7 +208,7 @@
 				data-dtype="Boolean"
 				{{checked (lookup ../flags.betterRollssw5e.quickDamage.value i)}}
 			/>
-			{{i}}: {{lookup ../flags.betterRollssw5e.quickDamage.context i}} ({{lookup ../DND5E.damageTypes (lookup (lookup ../item.data.data.damage.parts i) 1)}})
+			{{i}}: {{lookup ../flags.betterRollssw5e.quickDamage.context i}} ({{lookup ../SW5E.damageTypes (lookup (lookup ../item.data.data.damage.parts i) 1)}})
 		</label>
 		{{/each}}
 		{{/if}}
@@ -310,7 +310,7 @@
 				data-dtype="{{flags.betterRollssw5e.quickVersatile.type}}"
 				{{checked flags.betterRollssw5e.quickVersatile.altValue}}
 			/>
-			{{localize DND5E.weaponProperties.ver}}
+			{{localize SW5E.weaponProperties.ver}}
 		</label>
 		{{/if}}
 
@@ -425,7 +425,7 @@
 				data-dtype="Boolean"
 				{{checked (lookup ../flags.betterRollssw5e.quickDamage.altValue i)}}
 			/>
-			{{i}}: {{lookup ../flags.betterRollssw5e.quickDamage.context i}} ({{lookup ../DND5E.damageTypes (lookup (lookup ../item.data.data.damage.parts i) 1)}})
+			{{i}}: {{lookup ../flags.betterRollssw5e.quickDamage.context i}} ({{lookup ../SW5E.damageTypes (lookup (lookup ../item.data.data.damage.parts i) 1)}})
 		</label>
 		{{/each}}
 		{{/if}}
